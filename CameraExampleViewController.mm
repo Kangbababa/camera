@@ -273,16 +273,18 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
    
     CFRetain(pixelBuffer);
-    NSString *theImagePath = [[NSBundle mainBundle] pathForResource:@"2-13" ofType:@"jpg"];
-    [self uploadPhoto:theImagePath  withfileName:@"lala.jpg"];
-    //[self runCNNOnFrame:pixelBuffer];
+    //NSString *theImagePath = [[NSBundle mainBundle] pathForResource:@"2-13" ofType:@"jpg"];
+    //[self uploadPhoto:theImagePath  withfileName:@"lala.jpg"];
+     //   [self upLoadDocumentsPathAllFiles];
+    [self runCNNOnFrame:pixelBuffer];
+    
     //UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
     //[self saveImageToPhotos:img];
     CFRelease(pixelBuffer);
        
     }
     else{
-        LOG(INFO) << "audioAlert=true!:"<< audioAlert;
+        //LOG(INFO) << "audioAlert=true!:"<< audioAlert;
     }
 }
 
@@ -290,32 +292,44 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 - (void)saveImageToPhotos:(UIImage*)savedImage
 {
     LOG(INFO) << "size free="<< [self freeDiskSpaceInMB];
-    //UIImageWriteToSavedPhotosAlbum(savedImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-    //savedImage.rotate
-    //savedImage=[image rotate:UIImageOrientationLeft];
+    
     savedImage=[savedImage rotate:UIImageOrientationRight];
     
-    UIImageWriteToSavedPhotosAlbum(savedImage, nil, nil, nil);
-    LOG(INFO) << "UIImageWriteToSavedPhotosAlbum! ";
+    //UIImageWriteToSavedPhotosAlbum(savedImage, nil, nil, nil);
+    //LOG(INFO) << "UIImageWriteToSavedPhotosAlbum! ";
     //UIImageJPEGRepresentation(savedImage, 0.7f);
     
+   
+//    ////////if 200 ok delete the file from document
+//    NSString *documentsPath = [self getDocumentsPath];
+//    NSURL *documentsDirectoryURL = [NSURL fileURLWithPath:documentsPath];
+//    //2. 利用时间戳当做图片名字
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    formatter.dateFormat = @"yyyyMMddHHmmss";
+//    NSString *imageName = [formatter stringFromDate:[NSDate date]];
+//    NSString *fileName = [NSString stringWithFormat:@"%@.jpg",imageName];
+//
+//    NSURL *fileURL = [documentsDirectoryURL URLByAppendingPathComponent:fileName];
+//
+//    bool result=[UIImageJPEGRepresentation(savedImage, 0.7f) writeToFile: atomically:YES];
+//
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    
+
     //2. 利用时间戳当做图片名字
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyyMMddHHmmss";
     NSString *imageName = [formatter stringFromDate:[NSDate date]];
     NSString *fileName = [NSString stringWithFormat:@"%@.jpg",imageName];
-    
-  
+
+
     NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:fileName]];
     // 保存文件的名称
+    LOG(INFO) << "UIImageWriteToSavedNSDocumentDirectory filePath: "<<filePath;
     bool result=[UIImageJPEGRepresentation(savedImage, 0.7f) writeToFile:filePath atomically:YES];
     // 保存成功会返回YES
      LOG(INFO) << "UIImageWriteToSavedNSDocumentDirectory! result "<<result;
-    //[self uploadPhoto:"filename"];
-    //[self uploadPhoto];
+
 }
 // Create a UIImage from sample buffer data
 - (UIImage *) imageFromSampleBuffer:(CVImageBufferRef) imageBuffer
@@ -450,6 +464,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             if(badCount==60){
                 //audio alert
                 [self.audioPlayer play];
+                [self upLoadDocumentsPathAllFiles];
                 if(timer==Nil){
                 NSTimer *timer = [NSTimer timerWithTimeInterval:300 target:self selector:@selector(AudioUpdateStatus) userInfo:nil repeats:YES];
                 [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
@@ -885,35 +900,81 @@ pos:(int)pos
                       if (error) {
                           NSLog(@"Error: %@", error);
                       } else {
-//                                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
 //
-//                                   NSDictionary *dictionary =httpResponse ;
-//                                   NSLog([dictionary description]);
-//                                  NSLog(@"%d",[response statusCode]);
+
+                                if ([responseObject isKindOfClass:[NSArray class]]) {
+                                    NSArray *responseArray = responseObject;
+                              /* do something with responseArray */
+                                }
+                                else if ([responseObject isKindOfClass:[NSDictionary class]])
+                                {
+                                    NSDictionary *responseDict = responseObject;
+                                    /* do something with responseDict */
+                              
+                                    NSString *value = responseDict.description;
+                                    NSArray *aArray = [value componentsSeparatedByString:@";"];
+                                    NSString *filename;
+                                    NSString *arrayString;
+                                    
+                                    for(NSInteger i=0;i<[aArray count];i++)
+                                    {
+                                        arrayString=aArray[i];
+                                        // NSLog(@"%@", arrayString);
+                                  
+                                  
+                                        if([arrayString containsString:@"oldFileNames"] )
+                                        {
+                                            //NSLog(@"%@",aArray[i]);
+                                            filename=[arrayString substringWithRange:NSMakeRange(21, 18)];//aArray[i].substring(16,aArray[i].count-1);
+                                            //filename=[
+                                            NSLog(@"%@",filename);
+                                            break;
+                                            
+                                        }
+
+                                    }
+                                        ////////if 200 ok delete the file from document
+                                        NSString *documentsPath = [self getDocumentsPath];
+                                        NSURL *documentsDirectoryURL = [NSURL fileURLWithPath:documentsPath];
+                                        NSURL *fileURL = [documentsDirectoryURL URLByAppendingPathComponent:filename];
+                                        // 如果该路径下文件已经存在，就要先将其移除
+                                        NSFileManager *fileManager = [NSFileManager defaultManager];
+                                        if ([fileManager fileExistsAtPath:[fileURL path] isDirectory:NULL]) {
+
+                                            [fileManager removeItemAtURL:fileURL error:NULL];
+                                            NSLog(@"delete file:%@",fileURL);
+                                        }
+                                        ////////
+                              }
                           
+                       
+                          //NSLog(@"%@ %@", response, responseObject);
                           
-                        
-                          NSLog(@"%@ %@", response, responseObject);
-                          //if 200 ok delete the file from document
-//                          NSString *documentsPath = [self getDocumentsPath];
-//                          NSURL *documentsDirectoryURL = [NSURL fileURLWithPath:documentsPath];
-//                          NSURL *fileURL = [documentsDirectoryURL URLByAppendingPathComponent:[[response URL] lastPathComponent]];
-//                          // 如果该路径下文件已经存在，就要先将其移除，在移动文件
-//                          NSFileManager *fileManager = [NSFileManager defaultManager];
-//                          if ([fileManager fileExistsAtPath:[fileURL path] isDirectory:NULL]) {
-//                              [fileManager removeItemAtURL:fileURL error:NULL];
-//                          }
+                         
                       }
                   }];
-    LOG(INFO) << "uploadTask before!" ;
+   
 
     [uploadTask resume];
   LOG(INFO) << "uploadTask end!" ;
 
     
 }
+- (void)upLoadDocumentsPathAllFiles {
+////////////////////
+NSString *docsDir = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+NSFileManager *fileManager = [NSFileManager defaultManager];
+NSDirectoryEnumerator *dirEnum = [fileManager enumeratorAtPath:docsDir];
+NSString *fileNameindoc;
 
-
+while (fileNameindoc = [dirEnum nextObject]) {
+    //NSLog(@"----------FielName : %@" , fileNameindoc);
+    //NSLog(@"-----------------FileFullPath : %@" , [docsDir stringByAppendingPathComponent:fileNameindoc]) ;
+    
+    [self uploadPhoto:[docsDir stringByAppendingPathComponent:fileNameindoc]  withfileName:fileNameindoc];
+}
+}
+////////////////////////
 /* 获取Documents文件夹的路径 */
 - (NSString *)getDocumentsPath {
     NSArray *documents = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
