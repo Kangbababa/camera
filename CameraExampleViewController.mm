@@ -741,7 +741,7 @@ pos:(int)pos
                           alignment:kCAAlignmentLeft];
         
         if ((labelCount == 0) && (value > 0.5f)) {
-            [self speak:[label capitalizedString]];
+            //[self speak:[label capitalizedString]];
         }
         
         labelCount += 1;
