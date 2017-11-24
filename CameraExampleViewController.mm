@@ -28,6 +28,7 @@
 #include <sys/mount.h> 
 #include "tensorflow_utils.h"
 #include "UIImage+Rotate.h"
+#include "SettingController.h"
 
 #define boundary @"asdfasdfas"
 #define Access_Token @"2.00LvxxAE33dQxBcfde5ce726QdVfB"
@@ -112,7 +113,7 @@ NSTimer *timer;
     if ([session canAddOutput:videoDataOutput])
         [session addOutput:videoDataOutput];
     [[videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:YES];
-    //[videoDataOutput setMinFrameDuration:<#(CMTime)#>]
+   
     
     
     previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
@@ -187,6 +188,7 @@ NSTimer *timer;
 }
 
 - (IBAction)takePicture:(id)sender {
+     NSLog(@"takePicture:");
     if ([session isRunning]) {
         [session stopRunning];
         [sender setTitle:@"重新开始" forState:UIControlStateNormal];
@@ -216,6 +218,50 @@ NSTimer *timer;
          audioAlert=false;
         [sender setTitle:@"停止检测" forState:UIControlStateNormal];
     }
+}
+- (IBAction)settingPage:(id)sender {
+    
+    NSLog(@"settingPage:");
+    if ([session isRunning]) {
+        [session stopRunning];
+        
+    }
+     SettingController *settingsController = [[SettingController alloc] init];
+    settingsController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:settingsController];
+    [self presentViewController:nav animated:YES completion:nil];
+    //返回
+    //[self dismissViewControllerAnimated:(BOOL) completion:^(void)completion]；// presentViewController退回
+    
+//    if ([session isRunning]) {
+//        [session stopRunning];
+//        [sender setTitle:@"重新开始" forState:UIControlStateNormal];
+//
+//        flashView = [[UIView alloc] initWithFrame:[previewView frame]];
+//        [flashView setBackgroundColor:[UIColor whiteColor]];
+//        [flashView setAlpha:0.f];
+//        [[[self view] window] addSubview:flashView];
+//
+//        [UIView animateWithDuration:.2f
+//                         animations:^{
+//                             [flashView setAlpha:1.f];
+//                         }
+//                         completion:^(BOOL finished) {
+//                             [UIView animateWithDuration:.2f
+//                                              animations:^{
+//                                                  [flashView setAlpha:0.f];
+//                                              }
+//                                              completion:^(BOOL finished) {
+//                                                  [flashView removeFromSuperview];
+//                                                  flashView = nil;
+//                                              }];
+//                         }];
+//
+//    } else {
+//        [session startRunning];
+//        audioAlert=false;
+//        [sender setTitle:@"停止检测" forState:UIControlStateNormal];
+//    }
 }
 
 + (CGRect)videoPreviewBoxForGravity:(NSString *)gravity
@@ -464,7 +510,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             if(badCount==60){
                 //audio alert
                 [self.audioPlayer play];
-                [self upLoadDocumentsPathAllFiles];
+                //for debugs stop upload
+                //[self upLoadDocumentsPathAllFiles];
                 if(timer==Nil){
                 NSTimer *timer = [NSTimer timerWithTimeInterval:300 target:self selector:@selector(AudioUpdateStatus) userInfo:nil repeats:YES];
                 [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
@@ -473,8 +520,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 audioAlert=true;
             }
             if([self getMaxPredictionValue:output]<=0.8){
-                UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
-                [self saveImageToPhotos:img];
+                //for debugs to stop save pic
+                //UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
+                //[self saveImageToPhotos:img];
             }
              //display in frame
             auto predictions = output->flat<float>();
