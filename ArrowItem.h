@@ -15,5 +15,5 @@
 #import "SettingsItem.h"
 
 @interface ArrowItem: SettingsItem
-   @property (nonatomic, assign) BOOL isDisplay;//是否显示
+  // @property (nonatomic, assign) BOOL isDisplay;//是否显示
 @end

@@ -10,6 +10,7 @@
 #import "SettingsItem.h"
 #import "ArrowItem.h"
 #import "SwitchItem.h"
+#import "CheakItem.h"
 
 @implementation TableViewCell
 
@@ -32,9 +33,17 @@
     if ([settingItem isKindOfClass:[ArrowItem class]]) {
         self.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_right"]];
     }else if([settingItem isKindOfClass:[SwitchItem class]]){
-        self.accessoryView = [[UISwitch alloc]init];
+        self.accessoryView=[[UISwitch alloc]init];
+//        (UISwitch *) switchView= [[UISwitch alloc]init];
+//        [switchView addTarget: self action:@selector(switchChange) forControlEvents:UIControlEventValueChanged];
+//        self.accessoryView= switchView;
+    }else if([settingItem isKindOfClass:[CheakItem class]]){
+        self.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"common_icon_checkmark"]];
+      
     }
     
 }
-
+- (void)switchChange:(UISwitch *)switchView {
+    
+}
 @end

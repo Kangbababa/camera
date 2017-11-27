@@ -11,7 +11,7 @@
 
 @implementation ArrowItem
 
--(void)setIsDisplay:(BOOL)isDisplay{
-    _isDisplay = isDisplay;
-}
+//-(void)setIsDisplay:(BOOL)isDisplay{
+//    _isDisplay = isDisplay;
+//}
 @end

@@ -12,7 +12,7 @@
 #import "ArrowItem.h"
 #import "SwitchItem.h"
 #import "TableViewCell.h"
-//#import "WQMessageViewController.h"
+#import "SoundController.h"
 
 @interface SettingController ()
 @property(nonatomic,strong) NSMutableArray *cellData;
@@ -34,21 +34,27 @@
     [self.navigationController pushViewController:setVc animated:YES];
 }
 
-
+- (void)back {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-     NSLog(@"settingPage viewLoad:");
-    UIBarButtonItem *setting = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(setting)];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[NSForegroundColorAttributeName] = [UIColor blackColor];
-    [setting setTitleTextAttributes:dict forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = setting;
+    NSLog(@"settingPage viewLoad:");
+//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    //这个貌似没用
+//        UIBarButtonItem *setting = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//        dict[NSForegroundColorAttributeName] = [UIColor blackColor];
+//        [setting setTitleTextAttributes:dict forState:UIControlStateNormal];
+//        self.navigationItem.rightBarButtonItem = setting;
     
     //第一组数据
-    SettingsItem *item1 = [ArrowItem itemWithIcon:@"tab_normal_4"
-                                         andTitle:@"推送" ];//vcClass:[MessageViewController class]];
-    SettingsItem *item2 = [SwitchItem itemWithIcon:@"tab_normal_4" andTitle:@"摇一摇"];
-    SettingsItem *item3 = [SwitchItem itemWithIcon:@"tab_normal_4" andTitle:@"声音和效果"];
+    SettingsItem *item1 = [ArrowItem itemWithIcon:@"Audio"
+                                         andTitle:@"推送" ];
+    SettingsItem *item2 = [SwitchItem itemWithIcon:@"upload" andTitle:@"WiFi网络上传"];
+    SettingsItem *item3 = [ArrowItem itemWithIcon:@"sound" andTitle:@"提醒音" vcClass:[SoundController class]];
     NSArray *group1 = @[item1,item2,item3];
     
     SettingsItem *item4 = [ArrowItem itemWithIcon:@"tab_normal_4" andTitle:@"检查版本"];
@@ -109,3 +115,4 @@
 }
 
 @end
+

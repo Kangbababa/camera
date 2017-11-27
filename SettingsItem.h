@@ -13,11 +13,13 @@
 #endif /* SettingsItem_h */
 #import <Foundation/Foundation.h>
 
+typedef void (^SettingItemOption) ();
+
 @interface SettingsItem : NSObject
 @property(nonatomic,copy)NSString *title;
 @property(nonatomic,copy)NSString *icon;
 @property(nonatomic,assign) Class vcClass; //要跳转的控制器
-
+@property (nonatomic, copy) SettingItemOption option;
 -(instancetype)initWithIcon:(NSString *)icon andTitle:(NSString *)title;
 +(instancetype)itemWithIcon:(NSString *)icon andTitle:(NSString *)title;
 +(instancetype)itemWithIcon:(NSString *)icon andTitle:(NSString *)title vcClass:(Class) vcClass;
