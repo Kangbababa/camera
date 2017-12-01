@@ -28,7 +28,7 @@
 #include <sys/mount.h> 
 #include "tensorflow_utils.h"
 #include "UIImage+Rotate.h"
-#include "SettingController.h"
+#include "PRSettingsViewController.h"
 
 #define boundary @"asdfasdfas"
 #define Access_Token @"2.00LvxxAE33dQxBcfde5ce726QdVfB"
@@ -221,15 +221,22 @@ NSTimer *timer;
 }
 - (IBAction)settingPage:(id)sender {
     
-    NSLog(@"settingPage:");
+   
     if ([session isRunning]) {
         [session stopRunning];
         
     }
-     SettingController *settingsController = [[SettingController alloc] init];
-    settingsController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:settingsController];
-    [self presentViewController:nav animated:YES completion:nil];
+    UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
+    UIViewController *viewController = [settingsStoryboard instantiateViewControllerWithIdentifier:@"PRSettingsViewController"];
+    viewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:viewController animated:YES completion:nil];
+
+  
+    //    PRSettingsViewController *settingsController = [[PRSettingsViewController alloc] init];
+//    settingsController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:settingsController];
+//    [self presentViewController:nav animated:YES completion:nil];
+    
     //返回
     //[self dismissViewControllerAnimated:(BOOL) completion:^(void)completion]；// presentViewController退回
     
