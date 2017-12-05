@@ -10,34 +10,34 @@
 
 NSString *const PRAppSettingsThemeChangedNotification = @"PRAppSettingsThemeChangedNotification";
 
-static NSString *const kPrefetchKey = @"prefetch";
-static NSString *const kImageWIFIOnlyKey = @"imageWIFIOnly";
-static NSString *const kFontSizeKey = @"fontSize";
-static NSString *const kNightModeKey = @"nightModeFixed";
-static NSString *const kFastScrollKey = @"fastScroll";
-static NSString *const kAutoStarCommentedKey = @"autostar";
-static NSString *const kInclineSummaryKey = @"inclineSummary";
 
-@interface PRAppSettings ()
+static NSString *const kImageWIFIOnlyKey = @"imageWIFIOnly";
+static NSString *const kCheckAccuracyKey = @"checkAccuracy";
+static NSString *const kLeftAlert = @"leftAlert";
+static NSString *const kSoundAlert = @"soundAlert";
+static NSString *const kSoundAlertTitle = @"soundAlertTitle";
+
+@interface TaitouAppSettings ()
 
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
 
 @end
 
-@implementation PRAppSettings
+@implementation TaitouAppSettings
 
-@synthesize prefetchOnWIFI = _prefetchOnWIFI;
+
 @synthesize imageWIFIOnly = _imageWIFIOnly;
-@synthesize fontSize = _fontSize;
-@synthesize nightMode = _nightMode;
-@synthesize inclineSummary = _inclineSummary;
+@synthesize checkAccuracy = _checkAccuracy;
+@synthesize leftAlert = _leftAlert;
+@synthesize soundAlert = _soundAlert;
+@synthesize soundAlertTitle = _soundAlertTitle;
 
 + (instancetype)sharedSettings
 {
-    static PRAppSettings *_settings = nil;
+    static TaitouAppSettings *_settings = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _settings = [[PRAppSettings alloc] init];
+        _settings = [[TaitouAppSettings alloc] init];
     });
     return _settings;
 }
@@ -48,35 +48,24 @@ static NSString *const kInclineSummaryKey = @"inclineSummary";
     if (self) {
         _userDefaults = [NSUserDefaults standardUserDefaults];
         
-        [_userDefaults registerDefaults:@{kPrefetchKey: @YES,
-                                          kImageWIFIOnlyKey: @NO,
-                                          kFontSizeKey: @(PRArticleFontSizeNormal),
-                                          kNightModeKey: @NO,
-                                          kFastScrollKey: @YES,
-                                          kAutoStarCommentedKey: @YES,
-                                          kInclineSummaryKey: @NO}];
+        [_userDefaults registerDefaults:@{kImageWIFIOnlyKey: @YES,
+                                          kCheckAccuracyKey: @(CheckAccuracyNormal),
+                                          kLeftAlert: @NO,
+                                          kSoundAlert: @0,
+                                          kSoundAlertTitle: @"小宝贝抬头-童声版"}];
         
-        _prefetchOnWIFI = [_userDefaults boolForKey:kPrefetchKey];
+     
         _imageWIFIOnly = [_userDefaults boolForKey:kImageWIFIOnlyKey];
-        _fontSize = [_userDefaults integerForKey:kFontSizeKey];
-        _nightMode = [_userDefaults boolForKey:kNightModeKey];
-        _articleFastScroll = [_userDefaults boolForKey:kFastScrollKey];
-        _autoStarCommented = [_userDefaults boolForKey:kAutoStarCommentedKey];
-        _inclineSummary = [_userDefaults boolForKey:kInclineSummaryKey];
+        _checkAccuracy = [_userDefaults integerForKey:kCheckAccuracyKey];
+        _leftAlert = [_userDefaults boolForKey:kLeftAlert];
+        _soundAlert = [_userDefaults integerForKey:kSoundAlert];
+        _soundAlertTitle = [_userDefaults stringForKey:kSoundAlertTitle];
+       
     }
     return self;
 }
 
-- (BOOL)isPrefetchOnWIFI
-{
-    return _prefetchOnWIFI;
-}
 
-- (void)setPrefetchOnWIFI:(BOOL)prefetchOnWIFI
-{
-    _prefetchOnWIFI = prefetchOnWIFI;
-    [self.userDefaults setBool:prefetchOnWIFI forKey:kPrefetchKey];
-}
 
 - (BOOL)isImageWIFIOnly
 {
@@ -89,51 +78,37 @@ static NSString *const kInclineSummaryKey = @"inclineSummary";
     [self.userDefaults setBool:imageWIFIOnly forKey:kImageWIFIOnlyKey];
 }
 
-- (PRArticleFontSize)fontSize
+- (CheckAccuracySize)checkAccuracy
 {
-    return _fontSize;
+    return _checkAccuracy;
 }
 
-- (void)setFontSize:(PRArticleFontSize)fontSize
+- (void)setCheckAccuracy:(CheckAccuracySize)checkAccuracy
 {
-    _fontSize = fontSize;
-    [self.userDefaults setInteger:fontSize forKey:kFontSizeKey];
+    _checkAccuracy = checkAccuracy;
+    [self.userDefaults setInteger:checkAccuracy forKey:kCheckAccuracyKey];
 }
 
-- (void)setNightMode:(BOOL)nightMode
+
+
+- (void)setLeftAlert:(BOOL)leftAlert
 {
-    _nightMode = nightMode;
-    [self.userDefaults setBool:nightMode forKey:kNightModeKey];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:PRAppSettingsThemeChangedNotification object:self];
+    _leftAlert = leftAlert;
+    [self.userDefaults setBool:leftAlert forKey:kLeftAlert];
 }
 
-- (BOOL)isNightMode
+- (void)setSoundAlert:(NSInteger)soundAlert
 {
-    return _nightMode;
+    _soundAlert = soundAlert;
+    [self.userDefaults setInteger:soundAlert forKey:kSoundAlert];
 }
 
-- (void)setArticleFastScroll:(BOOL)articleFastScroll
+- (void)setSoundAlertTitle:(NSString *)soundAlertTitle
 {
-    _articleFastScroll = articleFastScroll;
-    [self.userDefaults setBool:articleFastScroll forKey:kFastScrollKey];
+    _soundAlertTitle = soundAlertTitle;
+    [self.userDefaults setObject:soundAlertTitle forKey:kSoundAlertTitle];
 }
 
-- (void)setAutoStarCommented:(BOOL)autoStarCommented
-{
-    _autoStarCommented = autoStarCommented;
-    [self.userDefaults setBool:autoStarCommented forKey:kAutoStarCommentedKey];
-}
 
-- (void)setInclineSummary:(BOOL)inclineSummary
-{
-    _inclineSummary = inclineSummary;
-    [self.userDefaults setBool:inclineSummary forKey:kInclineSummaryKey];
-}
-
-- (BOOL)inclineSummary
-{
-    return _inclineSummary;
-}
 
 @end

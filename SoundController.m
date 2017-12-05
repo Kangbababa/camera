@@ -7,132 +7,39 @@
 //
 
 
-#import "SettingController.h"
-#import "SettingsItem.h"
-#import "ArrowItem.h"
-#import "SwitchItem.h"
-#import "TableViewCell.h"
 #import "SoundController.h"
-#import "CheakItem.h"
-
+#import "PRAppSettings.h"
 
 @interface SoundController ()
-@property(nonatomic,strong) NSMutableArray *cellData;
-
+@property (assign, nonatomic) NSInteger       selIndex;      //单选选中的行
+@property (strong, nonatomic) NSMutableArray    *selectIndexs;  //多选选中的行
+@property (assign, nonatomic) NSString        *selTitle;      //单选选中的行标题
+@property (nonatomic, assign) BOOL              isSingle;       //单选还是多选
 @end
 
 @implementation SoundController
 
-
--(NSMutableArray *)cellData{
-    if (!_cellData) {
-        _cellData = [NSMutableArray array];
-    }
-    return _cellData;
-}
-
-- (void)setting {
-    SettingController *setVc = [[SettingController alloc] init];
-    [self.navigationController pushViewController:setVc animated:YES];
-}
-
-- (void)back {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"选择提示音";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"多选" style:UIBarButtonItemStylePlain target:self action:@selector(singleSelect)];
+//    self.navigationItem.rightBarButtonItem = rightItem;
     
+    TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
+    self.selIndex=settings.soundAlert;
+
     
-    //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    //这个貌似没用
-            UIBarButtonItem *setting = [[UIBarButtonItem alloc] initWithTitle:@"提醒音" style:UIBarButtonItemStylePlain target:self action:Nil];
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            dict[NSForegroundColorAttributeName] = [UIColor blackColor];
-            [setting setTitleTextAttributes:dict forState:UIControlStateNormal];
-            self.navigationItem.rightBarButtonItem = setting;
-    
-    //第一组数据
-//    SettingsItem *item1 = [ArrowItem itemWithIcon:@"Audio-Recorder"
-//                                         andTitle:@"推送" ];//vcClass:[MessageViewController class]];
-//    SettingsItem *item2 = [SwitchItem itemWithIcon:@"upload" andTitle:@"上传"];
-//    SettingsItem *item3 = [ArrowItem itemWithIcon:@"sound" andTitle:@"提醒音"];
-//    NSArray *group1 = @[item1,item2,item3];
-    
-//    SettingsItem *item4 = [ArrowItem itemWithIcon:@"tab_normal_4" andTitle:@"检查版本"];
-//    SettingsItem *item5 = [ArrowItem itemWithIcon:@"tab_normal_4" andTitle:@"帮助"];
-//    SettingsItem *item6 = [ArrowItem itemWithIcon:@"tab_normal_4" andTitle:@"分享"];
-//    SettingsItem *item7 = [ArrowItem itemWithIcon:@"tab_normal_4" andTitle:@"产品推荐"];
-//    SettingsItem *item8 = [ArrowItem itemWithIcon:@"tab_normal_4" andTitle:@"关于"];
-//    NSArray *group2 = @[item4,item5,item6,item7,item8];
-    
-//    [self.cellData addObject:group1];
-//    [self.cellData addObject:group2];
-    
-    // 大
-    __weak typeof(self) weakSelf = self;
-    CheakItem * __weak big = [CheakItem itemWithIcon:@"Audio-Recorder" andTitle:@"大"];
-    big.option = ^{
-        [weakSelf selItem:big];
-    };
-    
-    // 中
-    CheakItem * __weak middle = [CheakItem itemWithIcon:@"Audio-Recorder" andTitle:@"中"];
-    
-    middle.option = ^{
-        [weakSelf selItem:middle];
-    };
-    //_selCheakItem = middle;
-    // 小
-    CheakItem * __weak small = [CheakItem itemWithIcon:@"Audio-Recorder" andTitle:@"小"];
-    small.option = ^{
-        [weakSelf selItem:small];
-    };
-    
-    NSArray *group1 =  @[big,middle,small];
-   
-    [self.cellData addObject:group1];
-    
-    // 默认选中item
-    //[self setUpSelItem:middle];
+    //初始化多选数组
+    _selectIndexs = [NSMutableArray new];
+    //初始化刚启动是单选
+    _isSingle = 1;
+    //_selIndex=0;
     
 }
-
-//- (void)setUpSelItem:(CheakItem *)item
-//{
-//    NSString *fontSizeStr =  [[NSUserDefaults standardUserDefaults] objectForKey: @"FontSizeKey"];
-//    if (fontSizeStr == nil) {
-//        [self selItem:item];
-//        return;
-//    }
-//
-//    for (NSArray *group in self.cellData) {
-//        for (CheakItem *item in group) {
-//            if ( [item.title isEqualToString:fontSizeStr]) {
-//                [self selItem:item];
-//            }
-//
-//        }
-//
-//    }
-//}
-//
-- (void)selItem:(CheakItem *)item
-{
-//    _selCheakItem.isCheak = NO;
-//    item.isCheak = YES;
-//    _selCheakItem = item;
-    [self.tableView reloadData];
-
-
-    // 存储
-    [[NSUserDefaults standardUserDefaults] setObject:item.title forKey:@"FontSizeKey"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
-    // 发出通知
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"FontSizeChangeNote" object:nil userInfo:@{@"FontSizeKey":item.title}];
-
+- (void)back {
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -141,46 +48,103 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.cellData.count;
+    return 1;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    NSArray *array = self.cellData[section];
-    return array.count;
-    
+    return 3;
 }
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    TableViewCell *cell = [TableViewCell initCellWithTableView:tableView];
-    NSArray *array = self.cellData[indexPath.section];
-    SettingsItem *item = array[indexPath.row];
-    [cell setSettingItem:item];
+    static NSString *cellid = @"cellid";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+    }
+   // cell.textLabel.text = [NSString stringWithFormat:@"第%zi组,第%zi行",indexPath.section+1,indexPath.row];
+    NSInteger sectionIndex = indexPath.section;
+    if (sectionIndex == 0) { // 第0组
+        // 判断第0组的第几行
+        NSInteger rowIndex = indexPath.row;
+        
+        if (rowIndex == 0) {
+            cell.textLabel.text =@"小宝贝抬头-童声版";
+        } else if (rowIndex ==1) {
+            cell.textLabel.text =@"小弟抬头-姐姐温柔版";
+        } else {
+            cell.textLabel.text =@"大宝抬头-妈妈轻柔版";
+        }
+    }
+    
+    if (_isSingle) {            //单选
+        if (_selIndex == indexPath.row) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }else{
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        return cell;
+    }else{                      //多选
+        cell.accessoryType = UIAccessibilityTraitNone;
+        for (NSIndexPath *index in _selectIndexs) {
+            if (indexPath == index) {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
+        }
+    }
     return cell;
 }
 
-
+//选中某一行
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSArray *array = self.cellData[indexPath.section];
-    SettingsItem *item = array[indexPath.row];
-    if (item.option) {
-        item.option();
-        return;
+    
+    if (_isSingle) {       //单选
+        //取消之前的选择
+        UITableViewCell *celled = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_selIndex inSection:0]];
+        celled.accessoryType = UITableViewCellAccessoryNone;
+        
+        //记录当前的选择的位置
+        _selIndex = indexPath.row;
+        
+        //当前选择的打钩
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
+       
+        settings.soundAlert =_selIndex;
+        settings.soundAlertTitle=cell.textLabel.text;
+        
+    }else{                      //多选
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        
+        if (cell.accessoryType == UITableViewCellAccessoryCheckmark) { //如果为选中状态
+            cell.accessoryType = UITableViewCellAccessoryNone; //切换为未选中
+            [_selectIndexs removeObject:indexPath]; //数据移除
+        }else { //未选中
+            cell.accessoryType = UITableViewCellAccessoryCheckmark; //切换为选中
+            [_selectIndexs addObject:indexPath]; //添加索引数据到数组
+        }
     }
-    if (item.vcClass) {
-        id vc = [[item.vcClass alloc]init];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return @" ";
+//组头部高度
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 30;
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
-    return @" ";
+//单选还是多选按钮点击事件
+-(void)singleSelect{
+    _isSingle = !_isSingle;
+    if (_isSingle) {
+        self.navigationItem.rightBarButtonItem.title = @"多选";
+        self.title = @"(单选)";
+        
+        [self.selectIndexs removeAllObjects];
+        [self.tableView reloadData];
+    }else{
+        self.title = @"(多选)";
+        self.navigationItem.rightBarButtonItem.title = @"单选";
+    }
 }
 
 @end

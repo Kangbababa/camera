@@ -26,6 +26,7 @@
 		351BA1061FD11FE50085F15E /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 351BA1011FD11FE40085F15E /* Settings.storyboard */; };
 		351BA1071FD11FE50085F15E /* PRAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 351BA1021FD11FE40085F15E /* PRAppSettings.m */; };
 		351BA1081FD11FE50085F15E /* PRSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 351BA1031FD11FE40085F15E /* PRSettingsViewController.m */; };
+		351BA1121FD2CC7C0085F15E /* SoundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 351BA1111FD2CC7B0085F15E /* SoundController.m */; };
 		352B885F1FBAFB8600D60480 /* 2-13.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 352B885E1FBAFB8600D60480 /* 2-13.jpg */; };
 		358573591FB96720002D7BCA /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 358573581FB9671F002D7BCA /* back.png */; };
 		359AF0571FB19DDE00F8EEA0 /* opt_frozen_har_no.pb in Resources */ = {isa = PBXBuildFile; fileRef = 359AF0561FB19DDE00F8EEA0 /* opt_frozen_har_no.pb */; };
@@ -67,6 +68,8 @@
 		351BA1031FD11FE40085F15E /* PRSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRSettingsViewController.m; sourceTree = "<group>"; };
 		351BA1041FD11FE50085F15E /* PRAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRAppSettings.h; sourceTree = "<group>"; };
 		351BA1051FD11FE50085F15E /* PRSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRSettingsViewController.h; sourceTree = "<group>"; };
+		351BA1101FD2CC7B0085F15E /* SoundController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundController.h; sourceTree = "<group>"; };
+		351BA1111FD2CC7B0085F15E /* SoundController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundController.m; sourceTree = "<group>"; };
 		352B885E1FBAFB8600D60480 /* 2-13.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "2-13.jpg"; sourceTree = "<group>"; };
 		358573581FB9671F002D7BCA /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		359AF0561FB19DDE00F8EEA0 /* opt_frozen_har_no.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = opt_frozen_har_no.pb; sourceTree = "<group>"; };
@@ -126,6 +129,8 @@
 		591157921CF4011C00C31E3A = {
 			isa = PBXGroup;
 			children = (
+				351BA1101FD2CC7B0085F15E /* SoundController.h */,
+				351BA1111FD2CC7B0085F15E /* SoundController.m */,
 				351BA1041FD11FE50085F15E /* PRAppSettings.h */,
 				351BA1021FD11FE40085F15E /* PRAppSettings.m */,
 				351BA1051FD11FE50085F15E /* PRSettingsViewController.h */,
@@ -328,6 +333,7 @@
 				1CDB2D4C1ED3A9CD007929E9 /* tensorflow_utils.mm in Sources */,
 				1C3C9DCB1ED3AB4200B8B5FA /* ios_image_load.mm in Sources */,
 				359AF0651FB5564A00F8EEA0 /* UIImage+Rotate.m in Sources */,
+				351BA1121FD2CC7C0085F15E /* SoundController.m in Sources */,
 				1CDB2D4A1ED3A9CD007929E9 /* CameraExampleViewController.mm in Sources */,
 				1CDB2D491ED3A9CD007929E9 /* CameraExampleAppDelegate.m in Sources */,
 				1C3C9DCC1ED3AB4200B8B5FA /* main.mm in Sources */,

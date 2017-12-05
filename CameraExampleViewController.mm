@@ -227,18 +227,14 @@ NSTimer *timer;
         
     }
     UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
-    UIViewController *viewController = [settingsStoryboard instantiateViewControllerWithIdentifier:@"PRSettingsViewController"];
-    viewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentViewController:viewController animated:YES completion:nil];
+    UIViewController *settingsviewController = [settingsStoryboard instantiateViewControllerWithIdentifier:@"PRSettingsViewController"];
+    settingsviewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:settingsviewController];
+    [self presentViewController:nav animated:YES completion:nil];
 
   
-    //    PRSettingsViewController *settingsController = [[PRSettingsViewController alloc] init];
-//    settingsController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:settingsController];
-//    [self presentViewController:nav animated:YES completion:nil];
-    
-    //返回
-    //[self dismissViewControllerAnimated:(BOOL) completion:^(void)completion]；// presentViewController退回
+  
+  
     
 //    if ([session isRunning]) {
 //        [session stopRunning];

@@ -11,21 +11,22 @@
 //#import "AppDelegate.h"
 #import <MessageUI/MessageUI.h>
 #import "PRAppSettings.h"
+#import "SoundController.h"
 //#import "PRDatabase.h"
 //#import "PRAutoHamburgerButton.h"
 //#import "PRBrowserViewController.h"
 
 @interface PRSettingsViewController () <MFMailComposeViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UISwitch *prefetchSwitch;
+//@property (weak, nonatomic) IBOutlet UISwitch *prefetchSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *imageWIFIOnlySwitch;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *fontSizeSegment;
 @property (weak, nonatomic) IBOutlet UILabel *cacheSizeLabel;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *cacheIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (nonatomic, weak) IBOutlet UISwitch *fastScrollSwitch;
-@property (nonatomic, weak) IBOutlet UISwitch *autoStarSwitch;
-@property (nonatomic, weak) IBOutlet UISwitch *inclineSummarySwitch;
+//@property (nonatomic, weak) IBOutlet UISwitch *autoStarSwitch;
+//@property (nonatomic, weak) IBOutlet UISwitch *inclineSummarySwitch;
 
 @end
 
@@ -39,17 +40,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+   
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
 
-    PRAppSettings *settings = [PRAppSettings sharedSettings];
-    [self.prefetchSwitch setOn:settings.isPrefetchOnWIFI];
+    
+    TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
     [self.imageWIFIOnlySwitch setOn:settings.isImageWIFIOnly];
-    [self.fontSizeSegment setSelectedSegmentIndex:settings.fontSize];
-   // [self.versionLabel setText:[UIApplication cw_version]];
-    [self.fastScrollSwitch setOn:settings.articleFastScroll];
-    [self.autoStarSwitch setOn:settings.autoStarCommented];
-    [self.inclineSummarySwitch setOn:settings.inclineSummary];
-  
+    [self.fontSizeSegment setSelectedSegmentIndex:settings.checkAccuracy];
+    [self.versionLabel setText:@"1.0"];
+    [self.fastScrollSwitch setOn:settings.leftAlert];
+    [self.cacheSizeLabel setText:settings.soundAlertTitle];
+    //[self.autoStarSwitch setOn:settings.];
+    //[self.inclineSummarySwitch setOn:settings.inclineSummary];
+    //NSLog(@"Load:%@ %@", settings.isPrefetchOnWIFI, settings.fontSize);
 }
 - (void)back {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -86,6 +89,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
+     [self.cacheSizeLabel setText:settings.soundAlertTitle];
+
 //    [super viewWillAppear:animated];
 //    [self.cacheSizeLabel setText:@""];
 //    [self.cacheIndicator startAnimating];
@@ -94,30 +100,36 @@
 //        [self.cacheSizeLabel setText:cacheSize];
 //        [self.cacheIndicator stopAnimating];
 //    }];
+    
 }
 
 #pragma mark - Actions
 
 - (IBAction)switchValueChanged:(id)sender
 {
-    PRAppSettings *settings = [PRAppSettings sharedSettings];
-    settings.prefetchOnWIFI = [self.prefetchSwitch isOn];
+    TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
+    //settings.prefetchOnWIFI = [self.prefetchSwitch isOn];
     settings.imageWIFIOnly = [self.imageWIFIOnlySwitch isOn];
-    settings.autoStarCommented = [self.autoStarSwitch isOn];
-    settings.articleFastScroll = [self.fastScrollSwitch isOn];
-    settings.inclineSummary = [self.inclineSummarySwitch isOn];
+    settings.leftAlert = [self.fastScrollSwitch isOn];
+//    settings.leftAlert = [self.fastScrollSwitch isOn];
+//    settings.inclineSummary = [self.inclineSummarySwitch isOn];
+    // NSLog(@"change on:%@ %@", settings.prefetchOnWIFI, settings.imageWIFIOnly);
 }
 
 - (IBAction)segmentedControlValueChanged:(id)sender
 {
-    PRAppSettings *settings = [PRAppSettings sharedSettings];
-    settings.fontSize = [self.fontSizeSegment selectedSegmentIndex];
+    TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
+    settings.checkAccuracy = [self.fontSizeSegment selectedSegmentIndex];
+   // NSLog(@"change fontSize:%@ ", settings.prefetchOnWIFI, settings.imageWIFIOnly);
 }
 
 - (void)clearCache
 {
-    [self.cacheSizeLabel setText:@""];
-    [self.cacheIndicator startAnimating];
+    
+    SoundController *vc = [[SoundController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+//    [self.cacheSizeLabel setText:@""];
+//    [self.cacheIndicator startAnimating];
     
 //    [[CWObjectCache sharedCache] clearMemory];
 //
@@ -132,14 +144,14 @@
 - (void)contactMe
 {
     if (![MFMailComposeViewController canSendMail]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"你的手机还没有配置邮箱" message:@"请配置好邮箱后重试，你也可以通过其他渠道发送邮件到guojiubo@gmail.com来联系我" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"你的手机还没有配置邮箱" message:@"请配置好邮箱后重试，你也可以通过其他渠道发送邮件到974591189@qq.com来联系我" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
         return;
     }
     MFMailComposeViewController *vc = [[MFMailComposeViewController alloc] init];
     [vc setMailComposeDelegate:self];
-    [vc setSubject:@"来自简阅"];
-    [vc setToRecipients:@[@"guojiubo@gmail.com"]];
+    [vc setSubject:@"来自抬头"];
+    [vc setToRecipients:@[@"974591189@qq.com"]];
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -150,6 +162,9 @@
 //    PRBrowserViewController *vc = [[PRBrowserViewController alloc] init];
 //    vc.request = request;
 //    [self.navigationController pushViewController:vc animated:YES];
+   
+    SoundController *vc = [[SoundController alloc] init];
+   [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Mail callback

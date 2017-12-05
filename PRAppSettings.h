@@ -8,24 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, PRArticleFontSize) {
-    PRArticleFontSizeSmall,
-    PRArticleFontSizeNormal,
-    PRArticleFontSizeBig
+typedef NS_ENUM(NSInteger, CheckAccuracySize) {
+    CheckAccuracySmall,
+    CheckAccuracyNormal,
+    CheckAccuracyBig
 };
 
 extern NSString *const PRAppSettingsThemeChangedNotification;
 
-@interface PRAppSettings : NSObject
+@interface TaitouAppSettings : NSObject
 
 + (instancetype)sharedSettings;
-
-@property (nonatomic, getter = isPrefetchOnWIFI) BOOL prefetchOnWIFI;
 @property (nonatomic, getter = isImageWIFIOnly) BOOL imageWIFIOnly;
-@property (nonatomic, assign) PRArticleFontSize fontSize;
-@property (nonatomic, getter = isNightMode) BOOL nightMode;
-@property (nonatomic) BOOL articleFastScroll;
-@property (nonatomic) BOOL autoStarCommented;
-@property (nonatomic) BOOL inclineSummary;
+@property (nonatomic, assign) CheckAccuracySize checkAccuracy;
+@property (nonatomic) BOOL leftAlert;
+@property (nonatomic) NSInteger soundAlert;
+@property (nonatomic) NSString  *soundAlertTitle;
 
 @end
