@@ -1,10 +1,9 @@
 //
 //  SettingsViewController.m
-//  PlainReader
+//  tf_camera_example
 //
-//  Created by guojiubo on 14-5-14.
-//  Copyright (c) 2014年 guojiubo. All rights reserved.
-//
+//  Created by 白龙 on 2017/11/27.
+//  Copyright © 2017年 Google. All rights reserved.
 
 #import "PRSettingsViewController.h"
 //#import "PRRefreshHeader.h"
@@ -25,7 +24,7 @@
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *cacheIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (nonatomic, weak) IBOutlet UISwitch *fastScrollSwitch;
-//@property (nonatomic, weak) IBOutlet UISwitch *autoStarSwitch;
+@property (nonatomic, weak) IBOutlet UISwitch *autoStarSwitch;
 //@property (nonatomic, weak) IBOutlet UISwitch *inclineSummarySwitch;
 
 @end
@@ -50,7 +49,7 @@
     [self.versionLabel setText:@"1.0"];
     [self.fastScrollSwitch setOn:settings.leftAlert];
     [self.cacheSizeLabel setText:settings.soundAlertTitle];
-    //[self.autoStarSwitch setOn:settings.];
+    [self.autoStarSwitch setOn:settings.restAlert];
     //[self.inclineSummarySwitch setOn:settings.inclineSummary];
     //NSLog(@"Load:%@ %@", settings.isPrefetchOnWIFI, settings.fontSize);
 }
@@ -111,7 +110,7 @@
     //settings.prefetchOnWIFI = [self.prefetchSwitch isOn];
     settings.imageWIFIOnly = [self.imageWIFIOnlySwitch isOn];
     settings.leftAlert = [self.fastScrollSwitch isOn];
-//    settings.leftAlert = [self.fastScrollSwitch isOn];
+    settings.restAlert = [self.autoStarSwitch isOn];
 //    settings.inclineSummary = [self.inclineSummarySwitch isOn];
     // NSLog(@"change on:%@ %@", settings.prefetchOnWIFI, settings.imageWIFIOnly);
 }
@@ -163,8 +162,8 @@
 //    vc.request = request;
 //    [self.navigationController pushViewController:vc animated:YES];
    
-    SoundController *vc = [[SoundController alloc] init];
-   [self.navigationController pushViewController:vc animated:YES];
+//    SoundController *vc = [[SoundController alloc] init];
+//   [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Mail callback

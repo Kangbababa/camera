@@ -62,6 +62,9 @@ static void *AVCaptureStillImageIsCapturingStillImageContext =
 &AVCaptureStillImageIsCapturingStillImageContext;
 AVAudioPlayer *audioPlayer;
 NSTimer *timer;
+CGFloat zoomBegin;
+CGFloat zoomMax;
+AVCaptureDevice *device;
 @interface CameraExampleViewController (InternalMethods)
 - (void)setupAVCapture;
 - (void)teardownAVCapture;
@@ -81,8 +84,24 @@ NSTimer *timer;
     else
         [session setSessionPreset:AVCaptureSessionPresetPhoto];
     
-    AVCaptureDevice *device =
-    [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    //AVCaptureDevice *device =
+    device =[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+   
+    
+//    if ([AVCaptureDevice lockForConfiguration:&error]) {
+//        [AVCaptureDevice rampToVideoZoomFactor:zoom withRate:50];
+//    }else{
+//        // Handle the error appropriately.
+//    }
+    if( YES == [device lockForConfiguration:&error] )
+    {
+        // A maximum zoom factor of 1 indicates no zoom is available.
+        zoomMax = device.activeFormat.videoMaxZoomFactor;
+        [device unlockForConfiguration];
+    }
+    [self.view addGestureRecognizer:[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchToZoom:)]];
+
+ ///////////////////
     AVCaptureDeviceInput *deviceInput =
     [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
     assert(error == nil);
@@ -138,7 +157,40 @@ NSTimer *timer;
         [self teardownAVCapture];
     }
 }
-
+- (void)pinchToZoom:(UIPinchGestureRecognizer*)gesture
+{
+    switch (gesture.state)
+    {
+        case UIGestureRecognizerStateBegan:
+        {
+            zoomBegin = device.videoZoomFactor;
+            NSLog(@"zoom begin:%.3f", zoomBegin);
+        }break;
+        case UIGestureRecognizerStateChanged:
+        {
+            CGFloat zoomTo = zoomBegin + (gesture.scale * 2 - 2);
+            // step 0.01 between 1.0 and zoomMax (4x on iPhone 6s)
+            int msc = (int)(((zoomTo+0.001)*100))%100;
+            zoomTo = (NSInteger)zoomTo + msc * 0.01;
+            zoomTo = fmaxf(1, fminf(zoomTo, zoomMax));
+            
+            if ( device.videoZoomFactor != zoomTo )
+            {
+                 dispatch_async(dispatch_get_main_queue(), ^(void) {
+                    NSError *error;
+                    if ( YES == [device lockForConfiguration:&error] )
+                    {
+                        device.videoZoomFactor = zoomTo;
+                        [device unlockForConfiguration];
+                        NSLog(@"zoom changed:%.3f", zoomTo);
+                    }
+                });
+            }
+        }break;
+        default:
+            break;
+    }
+}
 - (void)teardownAVCapture {
     [stillImageOutput removeObserver:self forKeyPath:@"isCapturingStillImage"];
     [previewLayer removeFromSuperlayer];
@@ -954,7 +1006,7 @@ pos:(int)pos
 //
 
                                 if ([responseObject isKindOfClass:[NSArray class]]) {
-                                    NSArray *responseArray = responseObject;
+                                  //  NSArray *responseArray = responseObject;
                               /* do something with responseArray */
                                 }
                                 else if ([responseObject isKindOfClass:[NSDictionary class]])

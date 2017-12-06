@@ -1,9 +1,9 @@
 //
 //  CPAppSettings.m
-//  PlainReader
+//  tf_camera_example
 //
-//  Created by guojiubo on 14-5-26.
-//  Copyright (c) 2014年 guojiubo. All rights reserved.
+//  Created by 白龙 on 2017/11/27.
+//  Copyright © 2017年 Google. All rights reserved.
 //
 
 #import "PRAppSettings.h"
@@ -16,7 +16,7 @@ static NSString *const kCheckAccuracyKey = @"checkAccuracy";
 static NSString *const kLeftAlert = @"leftAlert";
 static NSString *const kSoundAlert = @"soundAlert";
 static NSString *const kSoundAlertTitle = @"soundAlertTitle";
-
+static NSString *const kRestAlert = @"restAlert";
 @interface TaitouAppSettings ()
 
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
@@ -31,6 +31,7 @@ static NSString *const kSoundAlertTitle = @"soundAlertTitle";
 @synthesize leftAlert = _leftAlert;
 @synthesize soundAlert = _soundAlert;
 @synthesize soundAlertTitle = _soundAlertTitle;
+@synthesize restAlert = _restAlert;
 
 + (instancetype)sharedSettings
 {
@@ -52,7 +53,9 @@ static NSString *const kSoundAlertTitle = @"soundAlertTitle";
                                           kCheckAccuracyKey: @(CheckAccuracyNormal),
                                           kLeftAlert: @NO,
                                           kSoundAlert: @0,
-                                          kSoundAlertTitle: @"小宝贝抬头-童声版"}];
+                                          kSoundAlertTitle: @"小宝贝抬头-童声版",
+                                          kRestAlert: @YES
+                                          }];
         
      
         _imageWIFIOnly = [_userDefaults boolForKey:kImageWIFIOnlyKey];
@@ -60,6 +63,7 @@ static NSString *const kSoundAlertTitle = @"soundAlertTitle";
         _leftAlert = [_userDefaults boolForKey:kLeftAlert];
         _soundAlert = [_userDefaults integerForKey:kSoundAlert];
         _soundAlertTitle = [_userDefaults stringForKey:kSoundAlertTitle];
+        _restAlert = [_userDefaults boolForKey:kRestAlert];
        
     }
     return self;
@@ -95,6 +99,11 @@ static NSString *const kSoundAlertTitle = @"soundAlertTitle";
 {
     _leftAlert = leftAlert;
     [self.userDefaults setBool:leftAlert forKey:kLeftAlert];
+}
+- (void)setRestAlert:(BOOL)restAlert
+{
+    _restAlert = restAlert;
+    [self.userDefaults setBool:restAlert forKey:kRestAlert];
 }
 
 - (void)setSoundAlert:(NSInteger)soundAlert
