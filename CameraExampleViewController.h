@@ -24,6 +24,7 @@
                        AVCaptureVideoDataOutputSampleBufferDelegate> {
   IBOutlet UIView *previewView;
   IBOutlet UISegmentedControl *camerasControl;
+  IBOutlet UIButton *takeButton;
   AVCaptureVideoPreviewLayer *previewLayer;
   AVCaptureVideoDataOutput *videoDataOutput;
   dispatch_queue_t videoDataOutputQueue;

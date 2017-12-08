@@ -182,7 +182,7 @@ AVCaptureDevice *device;
                     {
                         device.videoZoomFactor = zoomTo;
                         [device unlockForConfiguration];
-                        NSLog(@"zoom changed:%.3f", zoomTo);
+                        //NSLog(@"zoom changed:%.3f", zoomTo);
                     }
                 });
             }
@@ -275,9 +275,11 @@ AVCaptureDevice *device;
     
    
     if ([session isRunning]) {
+         audioAlert=false;
         [session stopRunning];
         
     }
+    [takeButton setTitle:@"重新开始" forState:UIControlStateNormal];
     UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
     UIViewController *settingsviewController = [settingsStoryboard instantiateViewControllerWithIdentifier:@"PRSettingsViewController"];
     settingsviewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;

@@ -31,6 +31,7 @@
 		358573591FB96720002D7BCA /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 358573581FB9671F002D7BCA /* back.png */; };
 		359AF0571FB19DDE00F8EEA0 /* opt_frozen_har_no.pb in Resources */ = {isa = PBXBuildFile; fileRef = 359AF0561FB19DDE00F8EEA0 /* opt_frozen_har_no.pb */; };
 		359AF0651FB5564A00F8EEA0 /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 359AF0641FB5564A00F8EEA0 /* UIImage+Rotate.m */; };
+		35D47E0A1FDA3369006E76B4 /* takeBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D47E091FDA3368006E76B4 /* takeBtn.png */; };
 		35D8ACE71FB92C5100F4EE78 /* dabao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 35D8ACE61FB92C5100F4EE78 /* dabao.mp3 */; };
 		35D8ACEC1FB92C6000F4EE78 /* tip.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 35D8ACE81FB92C5F00F4EE78 /* tip.mp3 */; };
 		35D8ACED1FB92C6000F4EE78 /* xiaobao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 35D8ACE91FB92C5F00F4EE78 /* xiaobao.mp3 */; };
@@ -76,6 +77,7 @@
 		359AF0621FB42BEB00F8EEA0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		359AF0631FB555F900F8EEA0 /* UIImage+Rotate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate.h"; sourceTree = "<group>"; };
 		359AF0641FB5564A00F8EEA0 /* UIImage+Rotate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotate.m"; sourceTree = "<group>"; };
+		35D47E091FDA3368006E76B4 /* takeBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = takeBtn.png; sourceTree = "<group>"; };
 		35D8ACE61FB92C5100F4EE78 /* dabao.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dabao.mp3; sourceTree = "<group>"; };
 		35D8ACE81FB92C5F00F4EE78 /* tip.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tip.mp3; sourceTree = "<group>"; };
 		35D8ACE91FB92C5F00F4EE78 /* xiaobao.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = xiaobao.mp3; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 		59A3CFF31CF4E68100C4259F /* data */ = {
 			isa = PBXGroup;
 			children = (
+				35D47E091FDA3368006E76B4 /* takeBtn.png */,
 				351BA0E01FCBA8600085F15E /* sound.png */,
 				351BA0E11FCBA8600085F15E /* upload.png */,
 				351BA0DE1FCBA1360085F15E /* Audio-Recorder.png */,
@@ -261,6 +264,7 @@
 				1C99111C1ED3B0E600A6BFB9 /* MainStoryboard_iPhone.storyboard in Resources */,
 				1CDB2D4E1ED3AA35007929E9 /* Info.plist in Resources */,
 				35D8ACED1FB92C6000F4EE78 /* xiaobao.mp3 in Resources */,
+				35D47E0A1FDA3369006E76B4 /* takeBtn.png in Resources */,
 				358573591FB96720002D7BCA /* back.png in Resources */,
 				351BA0E21FCBA8610085F15E /* sound.png in Resources */,
 				351BA0DF1FCBA1360085F15E /* Audio-Recorder.png in Resources */,
