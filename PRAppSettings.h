@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger, CheckAccuracySize) {
     CheckAccuracyBig
 };
 
-extern NSString *const PRAppSettingsThemeChangedNotification;
+extern NSString *const PRAppSettingsSoundChangedNotification;
 
 @interface TaitouAppSettings : NSObject
 

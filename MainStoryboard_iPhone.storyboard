@@ -42,10 +42,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="iD8-yH-eWH">
-                                <rect key="frame" x="60" y="463" width="200" height="126"/>
+                                <rect key="frame" x="97" y="408" width="126" height="126"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="停止检测">
+                                <state key="normal" image="takeBtnStop.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -70,5 +70,6 @@
         <image name="back.png" width="339" height="296"/>
         <image name="icon_settings.png" width="126" height="126"/>
         <image name="setting.png" width="32" height="32"/>
+        <image name="takeBtnStop.png" width="126" height="126"/>
     </resources>
 </document>

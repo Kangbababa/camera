@@ -8,7 +8,7 @@
 
 #import "PRAppSettings.h"
 
-NSString *const PRAppSettingsThemeChangedNotification = @"PRAppSettingsThemeChangedNotification";
+NSString *const PRAppSettingsSoundChangedNotification = @"PRAppSettingsSoundChangedNotification";
 
 
 static NSString *const kImageWIFIOnlyKey = @"imageWIFIOnly";
@@ -110,6 +110,7 @@ static NSString *const kRestAlert = @"restAlert";
 {
     _soundAlert = soundAlert;
     [self.userDefaults setInteger:soundAlert forKey:kSoundAlert];
+     [[NSNotificationCenter defaultCenter] postNotificationName:PRAppSettingsSoundChangedNotification object:self];
 }
 
 - (void)setSoundAlertTitle:(NSString *)soundAlertTitle

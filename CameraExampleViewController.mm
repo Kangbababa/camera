@@ -20,7 +20,7 @@
 #import <ifaddrs.h>
 #import <net/if.h>
 #import <SystemConfiguration/CaptiveNetwork.h>
-
+#import "PRAppSettings.h"
 
 
 #include <sys/time.h>
@@ -34,6 +34,7 @@
 #define Access_Token @"2.00LvxxAE33dQxBcfde5ce726QdVfB"
 #define kMusicFile @"xiaojie"
 #define kMusiceExt @"mp3"
+
 // If you have your own model, modify this to the file name, and make sure
 // you've added the file to your app resources too.
 static NSString* model_file_name = @"opt_frozen_har_no";
@@ -57,6 +58,7 @@ const std::string output_layer_name = "out/Softmax";
 //const NSString Hx_Main_heard_API=@"haha";
 //const NSString IMAGE_UPLOAD_URL_API=@"dade";
 static int badCount=0;
+static int CheckAccuracy=60;
 static bool audioAlert=false;
 static void *AVCaptureStillImageIsCapturingStillImageContext =
 &AVCaptureStillImageIsCapturingStillImageContext;
@@ -143,7 +145,7 @@ AVCaptureDevice *device;
     [previewLayer setFrame:[rootLayer bounds]];
     [rootLayer addSublayer:previewLayer];
     [session startRunning];
-    
+    [self LoadCheckAccuracy];
     if (error) {
         NSString *title = [NSString stringWithFormat:@"Failed with error %d", (int)[error code]];
         UIAlertController *alertController =
@@ -243,8 +245,9 @@ AVCaptureDevice *device;
      NSLog(@"takePicture:");
     if ([session isRunning]) {
         [session stopRunning];
-        [sender setTitle:@"重新开始" forState:UIControlStateNormal];
-        
+        //[sender setTitle:@"重新开始" forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"takeBtn.png"] forState:UIControlStateNormal];
+
         flashView = [[UIView alloc] initWithFrame:[previewView frame]];
         [flashView setBackgroundColor:[UIColor whiteColor]];
         [flashView setAlpha:0.f];
@@ -268,9 +271,25 @@ AVCaptureDevice *device;
     } else {
         [session startRunning];
          audioAlert=false;
-        [sender setTitle:@"停止检测" forState:UIControlStateNormal];
+        [self LoadCheckAccuracy];
+       // [sender setTitle:@"停止检测" forState:UIControlStateNormal];
+          [sender setImage:[UIImage imageNamed:@"takeBtnStop.png"] forState:UIControlStateNormal];
     }
 }
+
+- (void)LoadCheckAccuracy {
+    TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
+    switch(settings.checkAccuracy){
+        case CheckAccuracySmall:CheckAccuracy=90;
+            break;
+        case CheckAccuracyNormal:CheckAccuracy=60;
+            break;
+        case CheckAccuracyBig:CheckAccuracy=30;
+            break;
+        default: CheckAccuracy=60;
+    }
+}
+
 - (IBAction)settingPage:(id)sender {
     
    
@@ -564,7 +583,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 badCount=0;
                  LOG(INFO) << "badCount++:" << badCount;
             }
-            if(badCount==60){
+            if(badCount==CheckAccuracy){
                 //audio alert
                 [self.audioPlayer play];
                 //for debugs stop upload
@@ -576,9 +595,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 badCount=0;
                 audioAlert=true;
             }
-            if([self getMaxPredictionValue:output]<=0.8){
+            if([self getMaxPredictionValue:output]<=0.5){
                 //for debugs to stop save pic
-                //UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
+               // UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
                 //[self saveImageToPhotos:img];
             }
              //display in frame
@@ -607,8 +626,25 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
  *  @return 音频播放器
  */
 -(AVAudioPlayer *)audioPlayer{
-    if (!audioPlayer) {
-        NSString *urlStr=[[NSBundle mainBundle]pathForResource:kMusicFile ofType:kMusiceExt];
+
+    TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
+    NSString *  soundalertfilename;
+    switch(settings.soundAlert){
+        case 0:  soundalertfilename=@"xiaobao";
+                 break;
+        case 1: soundalertfilename=@"xiaojie";
+                break;
+        case 2: soundalertfilename=@"dabao";
+                break;
+        default:soundalertfilename=@"xiaobao";
+            break;
+    }
+    
+    return [self audioPlayer:soundalertfilename withext:@"mp3"];
+}
+-(AVAudioPlayer *)audioPlayer:(NSString *)musicfile withext:(NSString *)musicext{
+    if (!audioPlayer) { //create by everyAlert is  bad!!!!
+        NSString *urlStr=[[NSBundle mainBundle]pathForResource:musicfile ofType:musicext];
         NSURL *url=[NSURL fileURLWithPath:urlStr];
         NSError *error=nil;
         //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
@@ -623,6 +659,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
     return audioPlayer;
 }
+
 
 -(void)AudioUpdateStatus{
     audioAlert=false;
@@ -643,8 +680,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     return max;
 }
 
--(BOOL)badPosition:( tensorflow::Tensor *) output
-pos:(int)pos
+-(BOOL)badPosition:( tensorflow::Tensor *) output pos:(int)pos
 {
                     auto predictions = output->flat<float>();
                       bool max=true;
@@ -661,6 +697,7 @@ pos:(int)pos
 
 - (void)dealloc {
     [self teardownAVCapture];
+     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 // use front/back camera
@@ -715,6 +752,9 @@ pos:(int)pos
     if (!labels_status.ok()) {
         LOG(FATAL) << "Couldn't load labels: " << labels_status;
     }
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(hanldeSoundChangedNotification:) name:PRAppSettingsSoundChangedNotification object:nil];
     [self setupAVCapture];
 }
 
@@ -746,7 +786,40 @@ pos:(int)pos
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
-
+- (void)hanldeSoundChangedNotification:(NSNotification *)notification
+{
+    TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
+    NSString *  soundalertfilename;
+    switch(settings.soundAlert){
+        case 0:  soundalertfilename=@"xiaobao";
+            break;
+        case 1: soundalertfilename=@"xiaojie";
+            break;
+        case 2: soundalertfilename=@"dabao";
+            break;
+        default:soundalertfilename=@"xiaobao";
+            break;
+    }
+     LOG(INFO) << "hanldeSoundChangedNotification" << notification;
+   audioPlayer=[self audioPlayerChange:soundalertfilename withext:@"mp3"];
+}
+-(AVAudioPlayer *)audioPlayerChange:(NSString *)musicfile withext:(NSString *)musicext{
+    //if (!audioPlayer) { //create by everyAlert is  bad!!!!
+    NSString *urlStr=[[NSBundle mainBundle]pathForResource:musicfile ofType:musicext];
+    NSURL *url=[NSURL fileURLWithPath:urlStr];
+    NSError *error=nil;
+    //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
+    audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+    //设置播放器属性
+    audioPlayer.numberOfLoops=0;//设置为0不循环
+    [audioPlayer prepareToPlay];//加载音频文件到缓存
+    if(error){
+        NSLog(@"初始化播放器过程发生错误,错误信息:%@",error.localizedDescription);
+        return nil;
+    }
+    // }
+    return audioPlayer;
+}
 - (void)setPredictionValues:(NSDictionary *)newValues {
     const float decayValue = 0.75f;
     const float updateValue = 0.25f;
