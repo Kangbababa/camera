@@ -298,7 +298,8 @@ AVCaptureDevice *device;
         [session stopRunning];
         
     }
-    [takeButton setTitle:@"重新开始" forState:UIControlStateNormal];
+    //[takeButton setTitle:@"重新开始" forState:UIControlStateNormal];
+    [takeButton setImage:[UIImage imageNamed:@"takeBtn.png"] forState:UIControlStateNormal];
     UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
     UIViewController *settingsviewController = [settingsStoryboard instantiateViewControllerWithIdentifier:@"PRSettingsViewController"];
     settingsviewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -801,7 +802,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             break;
     }
      LOG(INFO) << "hanldeSoundChangedNotification" << notification;
-   audioPlayer=[self audioPlayerChange:soundalertfilename withext:@"mp3"];
+     audioPlayer=[self audioPlayerChange:soundalertfilename withext:@"mp3"];
+     [self.audioPlayer play];
 }
 -(AVAudioPlayer *)audioPlayerChange:(NSString *)musicfile withext:(NSString *)musicext{
     //if (!audioPlayer) { //create by everyAlert is  bad!!!!
@@ -822,7 +824,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 - (void)setPredictionValues:(NSDictionary *)newValues {
     const float decayValue = 0.75f;
-    const float updateValue = 0.25f;
+    const float updateValue = 0.10f;
     const float minimumThreshold = 0.01f;
     
     NSMutableDictionary *decayedPredictionValues =
@@ -874,8 +876,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     NSArray *sortedLabels = [candidateLabels
                              sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
     
-    const float leftMargin = 10.0f;
-    const float topMargin = 300.0f;
+    const float leftMargin = 15.0f;
+    const float topMargin = 330.0f;
     
     const float valueWidth = 48.0f;
     const float valueHeight = 26.0f;
