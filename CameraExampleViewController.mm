@@ -588,7 +588,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 //audio alert
                 [self.audioPlayer play];
                 //for debugs stop upload
-                //[self upLoadDocumentsPathAllFiles];
+                [self upLoadDocumentsPathAllFiles];
                 if(timer==Nil){
                 NSTimer *timer = [NSTimer timerWithTimeInterval:300 target:self selector:@selector(AudioUpdateStatus) userInfo:nil repeats:YES];
                 [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
@@ -598,8 +598,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             }
             if([self getMaxPredictionValue:output]<=0.5){
                 //for debugs to stop save pic
-               // UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
-                //[self saveImageToPhotos:img];
+                UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
+                [self saveImageToPhotos:img];
             }
              //display in frame
             auto predictions = output->flat<float>();
