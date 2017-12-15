@@ -63,7 +63,9 @@ static bool audioAlert=false;
 static void *AVCaptureStillImageIsCapturingStillImageContext =
 &AVCaptureStillImageIsCapturingStillImageContext;
 AVAudioPlayer *audioPlayer;
-NSTimer *timer;
+AVAudioPlayer *restaudioPlayer;
+NSTimer *mins5Timer;
+NSTimer *mins40Timer;
 CGFloat zoomBegin;
 CGFloat zoomMax;
 AVCaptureDevice *device;
@@ -145,7 +147,14 @@ AVCaptureDevice *device;
     [previewLayer setFrame:[rootLayer bounds]];
     [rootLayer addSublayer:previewLayer];
     [session startRunning];
+    ////////Init params from setting ,LoadCheckAccuracy,load 40min rest
     [self LoadCheckAccuracy];
+    
+    if(mins40Timer==Nil){
+        NSTimer *mins40Timer = [NSTimer timerWithTimeInterval:1800 target:self selector:@selector(Load40minRestAlert) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:mins40Timer forMode:NSDefaultRunLoopMode];
+    }
+    
     if (error) {
         NSString *title = [NSString stringWithFormat:@"Failed with error %d", (int)[error code]];
         UIAlertController *alertController =
@@ -589,9 +598,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 [self.audioPlayer play];
                 //for debugs stop upload
                 [self upLoadDocumentsPathAllFiles];
-                if(timer==Nil){
-                NSTimer *timer = [NSTimer timerWithTimeInterval:300 target:self selector:@selector(AudioUpdateStatus) userInfo:nil repeats:YES];
-                [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+                if(mins5Timer==Nil){
+                NSTimer *mins5Timer = [NSTimer timerWithTimeInterval:300 target:self selector:@selector(AudioUpdateStatus) userInfo:nil repeats:YES];
+                [[NSRunLoop mainRunLoop] addTimer:mins5Timer forMode:NSDefaultRunLoopMode];
                 }
                 badCount=0;
                 audioAlert=true;
@@ -660,8 +669,32 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
     return audioPlayer;
 }
+- (void)Load40minRestAlert {
+     TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
+    if(settings.restAlert){
+        [self.restaudioPlayer play];
+    }
+     NSLog(@"Load40minRestAlert:%i",settings.restAlert);
+}
 
-
+-(AVAudioPlayer *)restaudioPlayer{
+    
+    if (!restaudioPlayer) { //create by everyAlert is  bad!!!!
+        NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"rest" ofType:@"m4a"];
+        NSURL *url=[NSURL fileURLWithPath:urlStr];
+        NSError *error=nil;
+        //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
+        restaudioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+        //设置播放器属性
+        restaudioPlayer.numberOfLoops=0;//设置为0不循环
+        [restaudioPlayer prepareToPlay];//加载音频文件到缓存
+        if(error){
+            NSLog(@"初始化播放器过程发生错误,错误信息:%@",error.localizedDescription);
+            return nil;
+        }
+    }
+    return restaudioPlayer;
+}
 -(void)AudioUpdateStatus{
     audioAlert=false;
      LOG(INFO) << "Timer update audioAlert=false:" << audioAlert;

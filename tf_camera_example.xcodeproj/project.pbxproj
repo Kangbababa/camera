@@ -20,6 +20,7 @@
 		1CDB2D4E1ED3AA35007929E9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB2D4D1ED3AA35007929E9 /* Info.plist */; };
 		3504D6901FC7C7F8002E1197 /* icon_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 3504D68F1FC7C7F8002E1197 /* icon_settings.png */; };
 		3512D6261FDF792000FB4418 /* takeBtnStop.png in Resources */ = {isa = PBXBuildFile; fileRef = 3512D6251FDF791F00FB4418 /* takeBtnStop.png */; };
+		3512D6281FE3657100FB4418 /* rest.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3512D6271FE3657100FB4418 /* rest.m4a */; };
 		351BA0DD1FCB9FE90085F15E /* arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 351BA0DC1FCB9FE80085F15E /* arrow_right.png */; };
 		351BA0DF1FCBA1360085F15E /* Audio-Recorder.png in Resources */ = {isa = PBXBuildFile; fileRef = 351BA0DE1FCBA1360085F15E /* Audio-Recorder.png */; };
 		351BA0E21FCBA8610085F15E /* sound.png in Resources */ = {isa = PBXBuildFile; fileRef = 351BA0E01FCBA8600085F15E /* sound.png */; };
@@ -62,6 +63,7 @@
 		1CDB2D4D1ED3AA35007929E9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3504D68F1FC7C7F8002E1197 /* icon_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_settings.png; sourceTree = "<group>"; };
 		3512D6251FDF791F00FB4418 /* takeBtnStop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = takeBtnStop.png; sourceTree = "<group>"; };
+		3512D6271FE3657100FB4418 /* rest.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = rest.m4a; sourceTree = "<group>"; };
 		351BA0DC1FCB9FE80085F15E /* arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_right.png; sourceTree = "<group>"; };
 		351BA0DE1FCBA1360085F15E /* Audio-Recorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio-Recorder.png"; sourceTree = "<group>"; };
 		351BA0E01FCBA8600085F15E /* sound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound.png; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 		59A3CFF31CF4E68100C4259F /* data */ = {
 			isa = PBXGroup;
 			children = (
+				3512D6271FE3657100FB4418 /* rest.m4a */,
 				3512D6251FDF791F00FB4418 /* takeBtnStop.png */,
 				35D47E091FDA3368006E76B4 /* takeBtn.png */,
 				351BA0E01FCBA8600085F15E /* sound.png */,
@@ -272,6 +275,7 @@
 				3512D6261FDF792000FB4418 /* takeBtnStop.png in Resources */,
 				351BA0E21FCBA8610085F15E /* sound.png in Resources */,
 				351BA0DF1FCBA1360085F15E /* Audio-Recorder.png in Resources */,
+				3512D6281FE3657100FB4418 /* rest.m4a in Resources */,
 				3504D6901FC7C7F8002E1197 /* icon_settings.png in Resources */,
 				351BA0DD1FCB9FE90085F15E /* arrow_right.png in Resources */,
 				35D8ACE71FB92C5100F4EE78 /* dabao.mp3 in Resources */,
@@ -362,12 +366,15 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QJCQSLSXYA;
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wipos.tf-camera";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -384,12 +391,15 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QJCQSLSXYA;
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wipos.tf-camera";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
