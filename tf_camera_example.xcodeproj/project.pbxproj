@@ -23,7 +23,6 @@
 		3512D6281FE3657100FB4418 /* rest.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3512D6271FE3657100FB4418 /* rest.m4a */; };
 		351BA0DD1FCB9FE90085F15E /* arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 351BA0DC1FCB9FE80085F15E /* arrow_right.png */; };
 		351BA0DF1FCBA1360085F15E /* Audio-Recorder.png in Resources */ = {isa = PBXBuildFile; fileRef = 351BA0DE1FCBA1360085F15E /* Audio-Recorder.png */; };
-		351BA0E21FCBA8610085F15E /* sound.png in Resources */ = {isa = PBXBuildFile; fileRef = 351BA0E01FCBA8600085F15E /* sound.png */; };
 		351BA0E31FCBA8610085F15E /* upload.png in Resources */ = {isa = PBXBuildFile; fileRef = 351BA0E11FCBA8600085F15E /* upload.png */; };
 		351BA1061FD11FE50085F15E /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 351BA1011FD11FE40085F15E /* Settings.storyboard */; };
 		351BA1071FD11FE50085F15E /* PRAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 351BA1021FD11FE40085F15E /* PRAppSettings.m */; };
@@ -66,7 +65,6 @@
 		3512D6271FE3657100FB4418 /* rest.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = rest.m4a; sourceTree = "<group>"; };
 		351BA0DC1FCB9FE80085F15E /* arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_right.png; sourceTree = "<group>"; };
 		351BA0DE1FCBA1360085F15E /* Audio-Recorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio-Recorder.png"; sourceTree = "<group>"; };
-		351BA0E01FCBA8600085F15E /* sound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound.png; sourceTree = "<group>"; };
 		351BA0E11FCBA8600085F15E /* upload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload.png; sourceTree = "<group>"; };
 		351BA1011FD11FE40085F15E /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		351BA1021FD11FE40085F15E /* PRAppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRAppSettings.m; sourceTree = "<group>"; };
@@ -177,7 +175,6 @@
 				3512D6271FE3657100FB4418 /* rest.m4a */,
 				3512D6251FDF791F00FB4418 /* takeBtnStop.png */,
 				35D47E091FDA3368006E76B4 /* takeBtn.png */,
-				351BA0E01FCBA8600085F15E /* sound.png */,
 				351BA0E11FCBA8600085F15E /* upload.png */,
 				351BA0DE1FCBA1360085F15E /* Audio-Recorder.png */,
 				351BA0DC1FCB9FE80085F15E /* arrow_right.png */,
@@ -273,7 +270,6 @@
 				35D47E0A1FDA3369006E76B4 /* takeBtn.png in Resources */,
 				358573591FB96720002D7BCA /* back.png in Resources */,
 				3512D6261FDF792000FB4418 /* takeBtnStop.png in Resources */,
-				351BA0E21FCBA8610085F15E /* sound.png in Resources */,
 				351BA0DF1FCBA1360085F15E /* Audio-Recorder.png in Resources */,
 				3512D6281FE3657100FB4418 /* rest.m4a in Resources */,
 				3504D6901FC7C7F8002E1197 /* icon_settings.png in Resources */,

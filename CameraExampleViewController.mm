@@ -605,7 +605,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 badCount=0;
                 audioAlert=true;
             }
-            if([self getMaxPredictionValue:output]<=0.5){
+            if([self getMaxPredictionValue:output]<=0.8){
                 //for debugs to stop save pic
                 UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
                 [self saveImageToPhotos:img];
@@ -709,6 +709,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         if (predictions(index) > max) {
             max =predictions(index);
         }
+        // LOG(INFO) << "predictions(index):" << predictions(index);
     }
     
     return max;
@@ -857,7 +858,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 - (void)setPredictionValues:(NSDictionary *)newValues {
     const float decayValue = 0.75f;
-    const float updateValue = 0.10f;
+    const float updateValue = 0.25f;
     const float minimumThreshold = 0.01f;
     
     NSMutableDictionary *decayedPredictionValues =
