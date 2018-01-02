@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CameraExampleViewController.mm"
-            timestampString = "536206869.598314"
+            timestampString = "536559212.917386"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "424"
-            endingLineNumber = "424"
+            startingLineNumber = "429"
+            endingLineNumber = "429"
             landmarkName = "-saveImageToPhotos:"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CameraExampleViewController.mm"
-            timestampString = "536206869.615984"
+            timestampString = "536559212.921824"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "402"
-            endingLineNumber = "402"
+            startingLineNumber = "405"
+            endingLineNumber = "405"
             landmarkName = "-captureOutput:didOutputSampleBuffer:fromConnection:"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CameraExampleViewController.mm"
-            timestampString = "536206869.616513"
+            timestampString = "536559212.922248"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1156"
-            endingLineNumber = "1156"
+            startingLineNumber = "1164"
+            endingLineNumber = "1164"
             landmarkName = "-uploadPhoto:withfileName:"
             landmarkType = "7">
          </BreakpointContent>

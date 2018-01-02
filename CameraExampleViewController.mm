@@ -59,12 +59,13 @@ const std::string output_layer_name = "out/Softmax";
 //const NSString IMAGE_UPLOAD_URL_API=@"dade";
 static int badCount=0;
 static int CheckAccuracy=60;
-static bool audioAlert=false;
+//static bool audioAlert=false;
+static NSDate *preAudioAlertTime=[NSDate distantFuture];
 static void *AVCaptureStillImageIsCapturingStillImageContext =
 &AVCaptureStillImageIsCapturingStillImageContext;
 AVAudioPlayer *audioPlayer;
 AVAudioPlayer *restaudioPlayer;
-NSTimer *mins5Timer;
+//NSTimer *mins5Timer;
 NSTimer *mins40Timer;
 CGFloat zoomBegin;
 CGFloat zoomMax;
@@ -279,7 +280,8 @@ AVCaptureDevice *device;
         
     } else {
         [session startRunning];
-         audioAlert=false;
+         //audioAlert=false;
+         preAudioAlertTime=[NSDate distantFuture];
         [self LoadCheckAccuracy];
        // [sender setTitle:@"停止检测" forState:UIControlStateNormal];
           [sender setImage:[UIImage imageNamed:@"takeBtnStop.png"] forState:UIControlStateNormal];
@@ -303,7 +305,8 @@ AVCaptureDevice *device;
     
    
     if ([session isRunning]) {
-         audioAlert=false;
+         //audioAlert=false;
+         preAudioAlertTime=[NSDate distantFuture];
         [session stopRunning];
         
     }
@@ -400,19 +403,21 @@ AVCaptureDevice *device;
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection {
-    
-    if(!audioAlert){
-    CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    NSTimeInterval audiointerval = [preAudioAlertTime timeIntervalSinceNow];
+    //NSLog(@"%lf",audiointerval);
+    //if((!audioAlert)&&(fabs(audiointerval)>=300.0)){
+    if(fabs(audiointerval)>=300.0){
+        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
    
-    CFRetain(pixelBuffer);
-    //NSString *theImagePath = [[NSBundle mainBundle] pathForResource:@"2-13" ofType:@"jpg"];
-    //[self uploadPhoto:theImagePath  withfileName:@"lala.jpg"];
-     //   [self upLoadDocumentsPathAllFiles];
-    [self runCNNOnFrame:pixelBuffer];
+        CFRetain(pixelBuffer);
+        //NSString *theImagePath = [[NSBundle mainBundle] pathForResource:@"2-13" ofType:@"jpg"];
+        //[self uploadPhoto:theImagePath  withfileName:@"lala.jpg"];
+        //   [self upLoadDocumentsPathAllFiles];
+        [self runCNNOnFrame:pixelBuffer];
     
-    //UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
-    //[self saveImageToPhotos:img];
-    CFRelease(pixelBuffer);
+        //UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
+        //[self saveImageToPhotos:img];
+        CFRelease(pixelBuffer);
        
     }
     else{
@@ -596,14 +601,16 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             if(badCount==CheckAccuracy){
                 //audio alert
                 [self.audioPlayer play];
+                preAudioAlertTime=[NSDate date];
+                badCount=0;
+ //               audioAlert=true;
                 //for debugs stop upload
                 [self upLoadDocumentsPathAllFiles];
-                if(mins5Timer==Nil){
-                NSTimer *mins5Timer = [NSTimer timerWithTimeInterval:300 target:self selector:@selector(AudioUpdateStatus) userInfo:nil repeats:YES];
-                [[NSRunLoop mainRunLoop] addTimer:mins5Timer forMode:NSDefaultRunLoopMode];
-                }
-                badCount=0;
-                audioAlert=true;
+//                if(mins5Timer==Nil){
+//                NSTimer *mins5Timer = [NSTimer timerWithTimeInterval:300 target:self selector:@selector(AudioUpdateStatus) userInfo:nil repeats:YES];
+//                [[NSRunLoop mainRunLoop] addTimer:mins5Timer forMode:NSDefaultRunLoopMode];
+//                }
+               
             }
             if([self getMaxPredictionValue:output]<=0.8){
                 //for debugs to stop save pic
@@ -695,10 +702,11 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
     return restaudioPlayer;
 }
--(void)AudioUpdateStatus{
-    audioAlert=false;
-     LOG(INFO) << "Timer update audioAlert=false:" << audioAlert;
-}
+//-(void)AudioUpdateStatus{
+//    audioAlert=false;
+//     preAudioAlertTime=[NSDate distantFuture];
+//     LOG(INFO) << "Timer update audioAlert=false:" << audioAlert;
+//}
 
 
 -(float)getMaxPredictionValue:( tensorflow::Tensor *) output{
