@@ -59,12 +59,15 @@ const std::string output_layer_name = "out/Softmax";
 //const NSString IMAGE_UPLOAD_URL_API=@"dade";
 static int badCount=0;
 static int CheckAccuracy=60;
+static int captureIndex=0;
+static int captureInterval=10;
 //static bool audioAlert=false;
 static NSDate *preAudioAlertTime=[NSDate distantFuture];
 static void *AVCaptureStillImageIsCapturingStillImageContext =
 &AVCaptureStillImageIsCapturingStillImageContext;
 AVAudioPlayer *audioPlayer;
 AVAudioPlayer *restaudioPlayer;
+AVAudioPlayer *leftaudioPlayer;
 //NSTimer *mins5Timer;
 NSTimer *mins40Timer;
 CGFloat zoomBegin;
@@ -406,7 +409,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     NSTimeInterval audiointerval = [preAudioAlertTime timeIntervalSinceNow];
     //NSLog(@"%lf",audiointerval);
     //if((!audioAlert)&&(fabs(audiointerval)>=300.0)){
-    if(fabs(audiointerval)>=300.0){
+    
+    ++captureIndex;
+      //LOG(INFO) << "++captureIndex:" << captureIndex;
+    if((fabs(audiointerval)>=300.0)&&(captureIndex % captureInterval==0)){
         CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
    
         CFRetain(pixelBuffer);
@@ -418,6 +424,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         //UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
         //[self saveImageToPhotos:img];
         CFRelease(pixelBuffer);
+        
        
     }
     else{
@@ -598,6 +605,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 badCount=0;
                  LOG(INFO) << "badCount++:" << badCount;
             }
+            if ([self badPosition:output pos:5]) {
+                  //LOG(INFO) << "no person detect!" ;
+                  [self LoadleftAlert];
+            }
             if(badCount==CheckAccuracy){
                 //audio alert
                 [self.audioPlayer play];
@@ -681,9 +692,15 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if(settings.restAlert){
         [self.restaudioPlayer play];
     }
-     NSLog(@"Load40minRestAlert:%i",settings.restAlert);
+     //NSLog(@"Load40minRestAlert:%i",settings.restAlert);
 }
-
+- (void)LoadleftAlert {
+    TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
+    if(settings.leftAlert){
+        [self.leftaudioPlayer play];
+    }
+    //NSLog(@"LoadleftRestAlert:%i",settings.leftAlert);
+}
 -(AVAudioPlayer *)restaudioPlayer{
     
     if (!restaudioPlayer) { //create by everyAlert is  bad!!!!
@@ -702,6 +719,25 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
     return restaudioPlayer;
 }
+-(AVAudioPlayer *)leftaudioPlayer{
+    
+    if (!leftaudioPlayer) { //create by everyAlert is  bad!!!!
+        NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"isthere" ofType:@"mp3"];
+        NSURL *url=[NSURL fileURLWithPath:urlStr];
+        NSError *error=nil;
+        //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
+        leftaudioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+        //设置播放器属性
+        leftaudioPlayer.numberOfLoops=0;//设置为0不循环
+        [leftaudioPlayer prepareToPlay];//加载音频文件到缓存
+        if(error){
+            NSLog(@"初始化播放器过程发生错误,错误信息:%@",error.localizedDescription);
+            return nil;
+        }
+    }
+    return leftaudioPlayer;
+}
+
 //-(void)AudioUpdateStatus{
 //    audioAlert=false;
 //     preAudioAlertTime=[NSDate distantFuture];
@@ -717,7 +753,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         if (predictions(index) > max) {
             max =predictions(index);
         }
-        // LOG(INFO) << "predictions(index):" << predictions(index);
+      //   LOG(INFO) << "predictions(index):" << predictions(index);
     }
     
     return max;
