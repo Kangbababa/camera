@@ -90,7 +90,8 @@ AVCaptureDevice *device;
         UIUserInterfaceIdiomPhone)
         [session setSessionPreset:AVCaptureSessionPreset640x480];
     else
-        [session setSessionPreset:AVCaptureSessionPresetPhoto];
+        //[session setSessionPreset:AVCaptureSessionPresetPhoto];
+     [session setSessionPreset:AVCaptureSessionPreset640x480];
     
     //AVCaptureDevice *device =
     device =[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
@@ -313,6 +314,7 @@ AVCaptureDevice *device;
         [session stopRunning];
         
     }
+   
     //[takeButton setTitle:@"重新开始" forState:UIControlStateNormal];
     [takeButton setImage:[UIImage imageNamed:@"takeBtn.png"] forState:UIControlStateNormal];
     UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
@@ -470,7 +472,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:fileName]];
     // 保存文件的名称
     LOG(INFO) << "UIImageWriteToSavedNSDocumentDirectory filePath: "<<filePath;
-    bool result=[UIImageJPEGRepresentation(savedImage, 0.7f) writeToFile:filePath atomically:YES];
+    bool result=[UIImageJPEGRepresentation(savedImage, 0.2f) writeToFile:filePath atomically:YES];
     // 保存成功会返回YES
      LOG(INFO) << "UIImageWriteToSavedNSDocumentDirectory! result "<<result;
 
@@ -1230,6 +1232,7 @@ while (fileNameindoc = [dirEnum nextObject]) {
     //NSLog(@"-----------------FileFullPath : %@" , [docsDir stringByAppendingPathComponent:fileNameindoc]) ;
     
     [self uploadPhoto:[docsDir stringByAppendingPathComponent:fileNameindoc]  withfileName:fileNameindoc];
+    [NSThread sleepForTimeInterval:3.0f];
 }
 }
 ////////////////////////

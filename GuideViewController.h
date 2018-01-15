@@ -14,4 +14,8 @@
 //@interface GuideViewController : UIViewController <UIScrollViewDelegate>
 //
 //@end
+#import <UIKit/UIKit.h>
 
+@interface GuideViewController : UIViewController
+
+@end

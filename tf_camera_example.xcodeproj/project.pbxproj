@@ -31,6 +31,14 @@
 		352B885F1FBAFB8600D60480 /* 2-13.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 352B885E1FBAFB8600D60480 /* 2-13.jpg */; };
 		358573591FB96720002D7BCA /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 358573581FB9671F002D7BCA /* back.png */; };
 		35902685200313C400C5C415 /* GuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35902684200313C400C5C415 /* GuideViewController.m */; };
+		3590268D20046BEA00C5C415 /* bg3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3590268920046BE900C5C415 /* bg3@2x.png */; };
+		3590268E20046BEA00C5C415 /* bg1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3590268A20046BE900C5C415 /* bg1@2x.png */; };
+		3590268F20046BEA00C5C415 /* bg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3590268B20046BEA00C5C415 /* bg2@2x.png */; };
+		3590269020046BEA00C5C415 /* bg4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3590268C20046BEA00C5C415 /* bg4@2x.png */; };
+		3590269520046C0800C5C415 /* title2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3590269120046C0700C5C415 /* title2@2x.png */; };
+		3590269620046C0800C5C415 /* title4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3590269220046C0700C5C415 /* title4@2x.png */; };
+		3590269720046C0800C5C415 /* title3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3590269320046C0700C5C415 /* title3@2x.png */; };
+		3590269820046C0800C5C415 /* title1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3590269420046C0800C5C415 /* title1@2x.png */; };
 		359AF0571FB19DDE00F8EEA0 /* opt_frozen_har_no.pb in Resources */ = {isa = PBXBuildFile; fileRef = 359AF0561FB19DDE00F8EEA0 /* opt_frozen_har_no.pb */; };
 		359AF0651FB5564A00F8EEA0 /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 359AF0641FB5564A00F8EEA0 /* UIImage+Rotate.m */; };
 		35D47E0A1FDA3369006E76B4 /* takeBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D47E091FDA3368006E76B4 /* takeBtn.png */; };
@@ -78,6 +86,14 @@
 		358573581FB9671F002D7BCA /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		35902684200313C400C5C415 /* GuideViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GuideViewController.m; sourceTree = "<group>"; };
 		35902686200313E100C5C415 /* GuideViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GuideViewController.h; sourceTree = "<group>"; };
+		3590268920046BE900C5C415 /* bg3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg3@2x.png"; sourceTree = "<group>"; };
+		3590268A20046BE900C5C415 /* bg1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg1@2x.png"; sourceTree = "<group>"; };
+		3590268B20046BEA00C5C415 /* bg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg2@2x.png"; sourceTree = "<group>"; };
+		3590268C20046BEA00C5C415 /* bg4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg4@2x.png"; sourceTree = "<group>"; };
+		3590269120046C0700C5C415 /* title2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title2@2x.png"; sourceTree = "<group>"; };
+		3590269220046C0700C5C415 /* title4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title4@2x.png"; sourceTree = "<group>"; };
+		3590269320046C0700C5C415 /* title3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title3@2x.png"; sourceTree = "<group>"; };
+		3590269420046C0800C5C415 /* title1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title1@2x.png"; sourceTree = "<group>"; };
 		359AF0561FB19DDE00F8EEA0 /* opt_frozen_har_no.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = opt_frozen_har_no.pb; sourceTree = "<group>"; };
 		359AF0621FB42BEB00F8EEA0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		359AF0631FB555F900F8EEA0 /* UIImage+Rotate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate.h"; sourceTree = "<group>"; };
@@ -179,6 +195,14 @@
 		59A3CFF31CF4E68100C4259F /* data */ = {
 			isa = PBXGroup;
 			children = (
+				3590269420046C0800C5C415 /* title1@2x.png */,
+				3590269120046C0700C5C415 /* title2@2x.png */,
+				3590269320046C0700C5C415 /* title3@2x.png */,
+				3590269220046C0700C5C415 /* title4@2x.png */,
+				3590268A20046BE900C5C415 /* bg1@2x.png */,
+				3590268B20046BEA00C5C415 /* bg2@2x.png */,
+				3590268920046BE900C5C415 /* bg3@2x.png */,
+				3590268C20046BEA00C5C415 /* bg4@2x.png */,
 				3512D6271FE3657100FB4418 /* rest.m4a */,
 				3512D6251FDF791F00FB4418 /* takeBtnStop.png */,
 				35D47E091FDA3368006E76B4 /* takeBtn.png */,
@@ -236,7 +260,7 @@
 					1C564C0C1ED3A92E00087306 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = QJCQSLSXYA;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -266,24 +290,32 @@
 				35D8ACEF1FB92C6000F4EE78 /* xiaojie.mp3 in Resources */,
 				351BA1061FD11FE50085F15E /* Settings.storyboard in Resources */,
 				1C968D181ED3B8F20054F5C3 /* imagenet_comp_graph_label_strings.txt in Resources */,
+				3590268E20046BEA00C5C415 /* bg1@2x.png in Resources */,
 				352B885F1FBAFB8600D60480 /* 2-13.jpg in Resources */,
 				1C968D191ED3B8F20054F5C3 /* tensorflow_inception_graph.pb in Resources */,
 				35D8ACEE1FB92C6000F4EE78 /* isthere.mp3 in Resources */,
 				35D8ACF11FB92D6E00F4EE78 /* Images.xcassets in Resources */,
 				351BA0E31FCBA8610085F15E /* upload.png in Resources */,
 				1C99111C1ED3B0E600A6BFB9 /* MainStoryboard_iPhone.storyboard in Resources */,
+				3590268F20046BEA00C5C415 /* bg2@2x.png in Resources */,
 				1CDB2D4E1ED3AA35007929E9 /* Info.plist in Resources */,
 				35D8ACED1FB92C6000F4EE78 /* xiaobao.mp3 in Resources */,
 				35D47E0A1FDA3369006E76B4 /* takeBtn.png in Resources */,
 				358573591FB96720002D7BCA /* back.png in Resources */,
 				3512D6261FDF792000FB4418 /* takeBtnStop.png in Resources */,
+				3590269520046C0800C5C415 /* title2@2x.png in Resources */,
+				3590269820046C0800C5C415 /* title1@2x.png in Resources */,
 				351BA0DF1FCBA1360085F15E /* Audio-Recorder.png in Resources */,
+				3590269620046C0800C5C415 /* title4@2x.png in Resources */,
 				3512D6281FE3657100FB4418 /* rest.m4a in Resources */,
 				3504D6901FC7C7F8002E1197 /* icon_settings.png in Resources */,
+				3590268D20046BEA00C5C415 /* bg3@2x.png in Resources */,
 				351BA0DD1FCB9FE90085F15E /* arrow_right.png in Resources */,
+				3590269720046C0800C5C415 /* title3@2x.png in Resources */,
 				35D8ACE71FB92C5100F4EE78 /* dabao.mp3 in Resources */,
 				35D8ACEC1FB92C6000F4EE78 /* tip.mp3 in Resources */,
 				359AF0571FB19DDE00F8EEA0 /* opt_frozen_har_no.pb in Resources */,
+				3590269020046BEA00C5C415 /* bg4@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,16 +402,16 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = QJCQSLSXYA;
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wipos.taitou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "taitou-2";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -396,16 +428,16 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = QJCQSLSXYA;
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wipos.taitou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "taitou-2";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -433,7 +465,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = QJCQSLSXYA;
@@ -449,7 +481,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE_SPECIFIER = "taitou-2";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -467,14 +499,14 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = QJCQSLSXYA;
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wipos.taitou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "taitou-2";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -500,9 +532,9 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = QJCQSLSXYA;
@@ -525,7 +557,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE_SPECIFIER = "taitou-2";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -550,9 +582,9 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bai Long (QJCQSLSXYA)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = QJCQSLSXYA;
@@ -568,7 +600,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE_SPECIFIER = "taitou-2";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

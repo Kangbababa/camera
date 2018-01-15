@@ -11,10 +11,25 @@
 #import <MessageUI/MessageUI.h>
 #import "PRAppSettings.h"
 #import "SoundController.h"
+#import "GuideViewController.h"
 //#import "PRDatabase.h"
 //#import "PRAutoHamburgerButton.h"
 //#import "PRBrowserViewController.h"
 
+#import <EAIntroView/EAIntroView.h>
+//
+static NSString * const sampleDescription1 = @"【取景框】对准孩子背部，可以用双指手动调整焦距到合适的图像大小。";
+static NSString * const sampleDescription2 = @"自动对焦，当发现孩子坐姿不好时，不打断学习过程，语音提醒孩子纠正坐姿。";
+static NSString * const sampleDescription3 = @"智能检测，机器学习，越用越准。没有网络也能使用。";
+static NSString * const sampleDescription4 = @"设置个性提醒音，检测精度，满足一对一的使用需要。";
+//@interface GuideViewController () <EAIntroDelegate> {
+//    UIView *rootView;
+//    EAIntroView *_intro;
+//}
+//
+//@end
+UIView *rootView;
+EAIntroView *_intro;
 @interface PRSettingsViewController () <MFMailComposeViewControllerDelegate>
 
 //@property (weak, nonatomic) IBOutlet UISwitch *prefetchSwitch;
@@ -41,7 +56,7 @@
     [super viewDidLoad];
    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-
+    rootView = self.navigationController.view;
     
     TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
     [self.imageWIFIOnlySwitch setOn:settings.isImageWIFIOnly];
@@ -156,16 +171,52 @@
 
 - (void)about
 {
-//    NSURL *URL = [NSURL URLWithString:@"http://cnbeta.cocoawind.com/about.html"];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-//    PRBrowserViewController *vc = [[PRBrowserViewController alloc] init];
-//    vc.request = request;
+//   NSURL *URL = [NSURL URLWithString:@"http://cnbeta.cocoawind.com/about.html"];
+////    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+//    GuideViewController *vc = [[GuideViewController alloc] init];
+//    //vc.request = request;
 //    [self.navigationController pushViewController:vc animated:YES];
-   
-//    SoundController *vc = [[SoundController alloc] init];
-//   [self.navigationController pushViewController:vc animated:YES];
+//
+////    SoundController *vc = [[SoundController alloc] init];
+////   [self.navigationController pushViewController:vc animated:YES];
+ [self showIntroWithCrossDissolve];
+    
 }
+- (void)showIntroWithCrossDissolve {
+    EAIntroPage *page1 = [EAIntroPage page];
+    page1.title = @"抬头正姿";
+    page1.desc = sampleDescription1;
+    page1.bgImage = [UIImage imageNamed:@"bg1"];
+    page1.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title1"]];
+    
+    EAIntroPage *page2 = [EAIntroPage page];
+    page2.title = @"语音提醒";
+    page2.desc = sampleDescription2;
+    page2.bgImage = [UIImage imageNamed:@"bg2"];
+    page2.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title2"]];
+    
+    EAIntroPage *page3 = [EAIntroPage page];
+    page3.title = @"智能检测";
+    page3.desc = sampleDescription3;
+    page3.bgImage = [UIImage imageNamed:@"bg3"];
+    page3.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title3"]];
+    
+    EAIntroPage *page4 = [EAIntroPage page];
+    page4.title = @"个性的功能";
+    page4.desc = sampleDescription4;
+    page4.bgImage = [UIImage imageNamed:@"bg4"];
+    page4.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title4"]];
 
+    EAIntroView *intro = [[EAIntroView alloc] initWithFrame:rootView.bounds andPages:@[page1,page2,page3,page4]];
+     [intro.skipButton setTitle:@"下一页" forState:UIControlStateNormal];
+    intro.skipButtonAlignment = EAViewAlignmentCenter;
+    intro.skipButtonY = 80.f;
+    intro.pageControlY = 42.f;
+
+    [intro setDelegate:self];
+
+    [intro showInView:rootView animateDuration:0.3];
+}
 #pragma mark - Mail callback
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
