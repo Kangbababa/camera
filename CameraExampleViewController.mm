@@ -21,6 +21,7 @@
 #import <net/if.h>
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import "PRAppSettings.h"
+#import "StatisticsReport.h"
 
 
 #include <sys/time.h>
@@ -28,12 +29,11 @@
 #include <sys/mount.h> 
 #include "tensorflow_utils.h"
 #include "UIImage+Rotate.h"
-#include "PRSettingsViewController.h"
-
+//#include "PRSettingsViewController.h"
+//#include "StatisticsReportViewController.h"
 #define boundary @"asdfasdfas"
 #define Access_Token @"2.00LvxxAE33dQxBcfde5ce726QdVfB"
-#define kMusicFile @"xiaojie"
-#define kMusiceExt @"mp3"
+
 
 // If you have your own model, modify this to the file name, and make sure
 // you've added the file to your app resources too.
@@ -60,14 +60,17 @@ const std::string output_layer_name = "out/Softmax";
 static int badCount=0;
 static int CheckAccuracy=60;
 static int captureIndex=0;
-static int captureInterval=10;
+static int captureInterval=15;
+static int maxPredictionValueIndex=0;
+static NSDate *sessionStartTime;
+static NSDate *sessionStopTime;
 //static bool audioAlert=false;
 static NSDate *preAudioAlertTime=[NSDate distantFuture];
-static void *AVCaptureStillImageIsCapturingStillImageContext =
-&AVCaptureStillImageIsCapturingStillImageContext;
+static void *AVCaptureStillImageIsCapturingStillImageContext =&AVCaptureStillImageIsCapturingStillImageContext;
 AVAudioPlayer *audioPlayer;
 AVAudioPlayer *restaudioPlayer;
 AVAudioPlayer *leftaudioPlayer;
+StatisticsSummary *summary=[StatisticsSummary sharedSummary];
 //NSTimer *mins5Timer;
 NSTimer *mins40Timer;
 CGFloat zoomBegin;
@@ -152,6 +155,9 @@ AVCaptureDevice *device;
     [previewLayer setFrame:[rootLayer bounds]];
     [rootLayer addSublayer:previewLayer];
     [session startRunning];
+    //summary usedCountSum
+    ++summary.usedCountSum;
+    sessionStartTime=[NSDate date];
     ////////Init params from setting ,LoadCheckAccuracy,load 40min rest
     [self LoadCheckAccuracy];
     
@@ -259,6 +265,8 @@ AVCaptureDevice *device;
      NSLog(@"takePicture:");
     if ([session isRunning]) {
         [session stopRunning];
+         sessionStopTime=[NSDate date];
+         summary.usedTimeSum=summary.usedTimeSum+[sessionStopTime timeIntervalSinceDate:sessionStartTime];
         //[sender setTitle:@"重新开始" forState:UIControlStateNormal];
         [sender setImage:[UIImage imageNamed:@"takeBtn.png"] forState:UIControlStateNormal];
 
@@ -284,6 +292,10 @@ AVCaptureDevice *device;
         
     } else {
         [session startRunning];
+        //summary usedCountSum
+        ++summary.usedCountSum;
+        sessionStartTime=[NSDate date];
+        
          //audioAlert=false;
          preAudioAlertTime=[NSDate distantFuture];
         [self LoadCheckAccuracy];
@@ -312,6 +324,8 @@ AVCaptureDevice *device;
          //audioAlert=false;
          preAudioAlertTime=[NSDate distantFuture];
         [session stopRunning];
+        sessionStopTime=[NSDate date];
+        summary.usedTimeSum=summary.usedTimeSum+[sessionStopTime timeIntervalSinceDate:sessionStartTime];
         
     }
    
@@ -357,7 +371,29 @@ AVCaptureDevice *device;
 //        [sender setTitle:@"停止检测" forState:UIControlStateNormal];
 //    }
 }
-
+- (IBAction)statisticsPage:(id)sender {
+    
+    
+    if ([session isRunning]) {
+        //audioAlert=false;
+        preAudioAlertTime=[NSDate distantFuture];
+        [session stopRunning];
+        sessionStopTime=[NSDate date];
+        summary.usedTimeSum=summary.usedTimeSum+[sessionStopTime timeIntervalSinceDate:sessionStartTime];
+        
+    }
+    
+    //[takeButton setTitle:@"重新开始" forState:UIControlStateNormal];
+    [takeButton setImage:[UIImage imageNamed:@"takeBtn.png"] forState:UIControlStateNormal];
+    UIStoryboard *summaryStoryboard = [UIStoryboard storyboardWithName:@"StatisticsReport" bundle:nil];
+    UIViewController *summaryviewController = [summaryStoryboard instantiateViewControllerWithIdentifier:@"StatisticsReportViewController"];
+    summaryviewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:summaryviewController];
+    [self presentViewController:nav animated:YES completion:nil];
+    
+    
+    
+}
 + (CGRect)videoPreviewBoxForGravity:(NSString *)gravity
                           frameSize:(CGSize)frameSize
                        apertureSize:(CGSize)apertureSize {
@@ -471,7 +507,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
     NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:fileName]];
     // 保存文件的名称
-    LOG(INFO) << "UIImageWriteToSavedNSDocumentDirectory filePath: "<<filePath;
+    //LOG(INFO) << "UIImageWriteToSavedNSDocumentDirectory filePath: "<<filePath;
     bool result=[UIImageJPEGRepresentation(savedImage, 0.2f) writeToFile:filePath atomically:YES];
     // 保存成功会返回YES
      LOG(INFO) << "UIImageWriteToSavedNSDocumentDirectory! result "<<result;
@@ -614,6 +650,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             if(badCount==CheckAccuracy){
                 //audio alert
                 [self.audioPlayer play];
+                //summary alertCounts
+                ++summary.alertCountSum;
+                // init  params  to restart monitor
                 preAudioAlertTime=[NSDate date];
                 badCount=0;
  //               audioAlert=true;
@@ -625,10 +664,16 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 //                }
                
             }
-            if([self getMaxPredictionValue:output]<=0.8){
+            if([self getMaxPredictionValue:output]<=0.7){
                 //for debugs to stop save pic
                 UIImage *img=[self imageFromSampleBuffer:pixelBuffer];
                 [self saveImageToPhotos:img];
+                //summary pos index
+                [self MaxPositonSummary];
+                
+            }else{
+                //summary pos index
+                [self MaxPositonSummary];
             }
              //display in frame
             auto predictions = output->flat<float>();
@@ -696,6 +741,27 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
      //NSLog(@"Load40minRestAlert:%i",settings.restAlert);
 }
+
+- (void)MaxPositonSummary {
+    //summary pos index
+    switch(maxPredictionValueIndex){
+        case 0:  ++summary.goodCountSum;
+        break;
+        case 1: ++summary.leftCountSum;
+        break;
+        case 2:  ++summary.rightCountSum;
+        break;
+        case 3: ++summary.badCountSum;
+        break;
+        case 4:  ++summary.standCountSum;
+        break;
+        case 5: ++summary.leaveCountSum;
+        break;
+        default: ++summary.leaveCountSum;
+        break;
+    }
+    //NSLog(@"Load40minRestAlert:%i",settings.restAlert);
+}
 - (void)LoadleftAlert {
     TaitouAppSettings *settings = [TaitouAppSettings sharedSettings];
     if(settings.leftAlert){
@@ -752,8 +818,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     float max = predictions(0);
     for (int index = 0; index< predictions.size(); index += 1) {
-        if (predictions(index) > max) {
+        if (predictions(index) >= max) {
             max =predictions(index);
+            maxPredictionValueIndex=index;
         }
       //   LOG(INFO) << "predictions(index):" << predictions(index);
     }
@@ -957,7 +1024,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                              sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
     
     const float leftMargin = 15.0f;
-    const float topMargin = 330.0f;
+    const float topMargin = 360.0f;
     
     const float valueWidth = 48.0f;
     const float valueHeight = 26.0f;

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -30,14 +30,14 @@
                                 <gestureRecognizers/>
                             </view>
                             <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back.png" highlightedImage="back.png" highlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BzU-YG-4et">
-                                <rect key="frame" x="16" y="60" width="339" height="296"/>
+                                <rect key="frame" x="16" y="90" width="339" height="296"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" image="YES" adjustable="YES"/>
                                     <bool key="isElement" value="NO"/>
                                 </accessibility>
                             </imageView>
-                            <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GW4-aQ-YVb">
-                                <rect key="frame" x="319" y="70" width="40" height="40"/>
+                            <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GW4-aQ-YVb" userLabel="settings">
+                                <rect key="frame" x="319" y="100" width="40" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="1mP-Qe-ffW"/>
@@ -63,15 +63,30 @@
                                     <action selector="takePicture:" destination="2" eventType="touchUpInside" id="BTy-7E-XUS"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.050000000000000003" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HrQ-N4-TjK" userLabel="Statistics">
+                                <rect key="frame" x="26" y="100" width="40" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="bKW-TS-ong"/>
+                                    <constraint firstAttribute="width" constant="40" id="ssa-qI-uEd"/>
+                                </constraints>
+                                <state key="normal" image="icon_settings.png"/>
+                                <state key="highlighted" image="setting.png"/>
+                                <connections>
+                                    <action selector="statisticsPage:" destination="2" eventType="touchUpInside" id="rjn-10-jrP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="BzU-YG-4et" firstAttribute="top" secondItem="8al-U2-f73" secondAttribute="bottom" constant="40" id="28s-28-b8t"/>
+                            <constraint firstItem="BzU-YG-4et" firstAttribute="top" secondItem="8al-U2-f73" secondAttribute="bottom" constant="70" id="28s-28-b8t"/>
                             <constraint firstItem="BzU-YG-4et" firstAttribute="leading" secondItem="3" secondAttribute="leadingMargin" id="E6b-w3-vfQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GW4-aQ-YVb" secondAttribute="trailing" id="FvU-Pl-kTF"/>
                             <constraint firstItem="iD8-yH-eWH" firstAttribute="leading" secondItem="3" secondAttribute="leadingMargin" constant="97" id="L8K-HS-y8O"/>
-                            <constraint firstItem="GW4-aQ-YVb" firstAttribute="top" secondItem="8al-U2-f73" secondAttribute="bottom" constant="50" id="O1U-mf-Q7X"/>
+                            <constraint firstItem="GW4-aQ-YVb" firstAttribute="top" secondItem="8al-U2-f73" secondAttribute="bottom" constant="80" id="O1U-mf-Q7X"/>
+                            <constraint firstItem="HrQ-N4-TjK" firstAttribute="top" secondItem="8al-U2-f73" secondAttribute="bottom" constant="80" id="ULU-LS-7ZF"/>
                             <constraint firstItem="F4K-uj-wOH" firstAttribute="top" secondItem="iD8-yH-eWH" secondAttribute="bottom" constant="10" id="fCW-tJ-tdS"/>
+                            <constraint firstItem="HrQ-N4-TjK" firstAttribute="leading" secondItem="3" secondAttribute="leadingMargin" constant="10" id="gQO-h5-P6a"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iD8-yH-eWH" secondAttribute="trailing" constant="120" id="jWm-La-pSh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="BzU-YG-4et" secondAttribute="trailing" constant="4" id="tTk-hx-wDw"/>
                         </constraints>
@@ -90,6 +105,6 @@
         <image name="back.png" width="339" height="296"/>
         <image name="icon_settings.png" width="126" height="126"/>
         <image name="setting.png" width="32" height="32"/>
-        <image name="takeBtnStop.png" width="126" height="126"/>
+        <image name="takeBtnStop.png" width="152" height="152"/>
     </resources>
 </document>

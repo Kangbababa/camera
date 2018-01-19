@@ -45,39 +45,26 @@ static NSString * const sampleDescription4 = @"设置个性提醒音，检测精
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) {
          [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
+        
         EAIntroPage *page1 = [EAIntroPage page];
-        page1.title = @"抬头正姿";
-        page1.desc = sampleDescription1;
         page1.bgImage = [UIImage imageNamed:@"bg1"];
-        page1.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title1"]];
-    
+        
         EAIntroPage *page2 = [EAIntroPage page];
-        page2.title = @"语音提醒";
-        page2.desc = sampleDescription2;
         page2.bgImage = [UIImage imageNamed:@"bg2"];
-        page2.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title2"]];
-    
+        
         EAIntroPage *page3 = [EAIntroPage page];
-        page3.title = @"智能检测";
-        page3.desc = sampleDescription3;
         page3.bgImage = [UIImage imageNamed:@"bg3"];
-        page3.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title3"]];
-    
-        EAIntroPage *page4 = [EAIntroPage page];
-        page4.title = @"个性的功能";
-        page4.desc = sampleDescription4;
-        page4.bgImage = [UIImage imageNamed:@"bg4"];
-        page4.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title4"]];
-    
-        EAIntroView *intro = [[EAIntroView alloc] initWithFrame:self.window.rootViewController.view.bounds andPages:@[page1,page2,page3,page4]];
-        [intro.skipButton setTitle:@"下一页" forState:UIControlStateNormal];
+        
+         EAIntroView *intro = [[EAIntroView alloc] initWithFrame:self.window.rootViewController.view.bounds andPages:@[page1,page2,page3]];
+        [intro.skipButton setTitle:@"滑动到下页" forState:UIControlStateNormal];
         intro.skipButtonAlignment = EAViewAlignmentCenter;
         intro.skipButtonY = 80.f;
         intro.pageControlY = 42.f;
-    
+        
         [intro setDelegate:self];
-    
+        
         [intro showInView:self.window.rootViewController.view animateDuration:0.3];
+        
     
     }
   return YES;
