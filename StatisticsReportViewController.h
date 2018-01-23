@@ -12,7 +12,8 @@
 
 #endif /* StatisticsReportViewController_h */
 #import <UIKit/UIKit.h>
+#import "iOS-Echarts.h"
 
 @interface StatisticsReportViewController : UITableViewController
-
+   
 @end

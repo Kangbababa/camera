@@ -21,9 +21,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *down;
 @property (weak, nonatomic) IBOutlet UILabel *stand;
 @property (weak, nonatomic) IBOutlet UILabel *leave;
+@property (weak, nonatomic) IBOutlet PYEchartsView *echartsView;
 @end
 
+
+StatisticsSummary *settings;
+
 @implementation StatisticsReportViewController
+
 
 - (void)dealloc
 {
@@ -37,9 +42,9 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
    
     
-    StatisticsSummary *settings = [StatisticsSummary sharedSummary];
+     settings= [StatisticsSummary sharedSummary];
      [self.countsSummary setText:[NSString stringWithFormat:@"%ld", settings.usedCountSum]];
-     [self.timeSummary setText:[NSString stringWithFormat:@"%f", settings.usedTimeSum]];
+     [self.timeSummary setText:[NSString stringWithFormat:@"%.2f秒", settings.usedTimeSum]];
      [self.alertCounts setText:[NSString stringWithFormat:@"%ld", settings.alertCountSum]];
      [self.good setText:[NSString stringWithFormat:@"%ld", settings.goodCountSum]];
      [self.left setText:[NSString stringWithFormat:@"%ld", settings.leftCountSum]];
@@ -48,6 +53,134 @@
      [self.stand setText:[NSString stringWithFormat:@"%ld", settings.standCountSum]];
      [self.leave setText:[NSString stringWithFormat:@"%ld", settings.leaveCountSum]];
     //NSLog(@"Load:%@ %@", settings.isPrefetchOnWIFI, settings.fontSize);
+    
+//    PYOption *option= [PYOption initPYOptionWithBlock:^(PYOption *option) {
+//
+//        option.titleEqual([PYTitle initPYTitleWithBlock:^(PYTitle *title) {
+//            title.textEqual(@"Event River").subtextEqual(@"Test subtext");
+//        }])
+//        .tooltipEqual([PYTooltip initPYTooltipWithBlock:^(PYTooltip *tooltip) {
+//            tooltip.triggerEqual(PYTooltipTriggerItem).enterableEqual(YES);
+//        }])
+//        .legendEqual([PYLegend initPYLegendWithBlock:^(PYLegend *legend) {
+//            legend.dataEqual(@[@"first data", @"second data"]);
+//        }])
+//        .toolboxEqual([PYToolbox initPYToolboxWithBlock:^(PYToolbox *toolbox) {
+//            toolbox.showEqual(YES).featureEqual([PYToolboxFeature initPYToolboxFeatureWithBlock:^(PYToolboxFeature *feature) {
+//                feature.markEqual([PYToolboxFeatureMark initPYToolboxFeatureMarkWithBlock:^(PYToolboxFeatureMark *mark) {
+//                    mark.showEqual(YES);
+//                }])
+//                .restoreEqual([PYToolboxFeatureRestore initPYToolboxFeatureRestoreWithBlock:^(PYToolboxFeatureRestore *restore) {
+//                    restore.showEqual(YES);
+//                }]);
+//            }]);
+//        }])
+////        .xAxisEqual([[NSMutableArray alloc] initWithArray:@[axis]])
+////        .seriesEqual([[NSMutableArray alloc] initWithArray:@[series1, series2]])
+//        .gridEqual([PYGrid initPYGridWithBlock:^(PYGrid *grid) {
+//            grid.xEqual(@10)
+//            .x2Equal(@30);
+//        }]);
+//    }];
+//
+    // 最后设置配置型以及加载
+//    [self.echartsView setOption:option];
+//    [self.echartsView loadEcharts];
+    
+    [self.echartsView setOption:[self standardLineOption]];
+    
+    [self.echartsView loadEcharts];
+
+}
+
+
+- (PYOption *)standardLineOption {
+    
+    
+//    PYOption *option = [[PYOption alloc] init];
+//    option.backgroundColor = [[PYColor alloc] initWithColor:[UIColor grayColor]];
+//    option.calculable = NO;
+//
+//    PYTooltip *tooltip = [[PYTooltip alloc] init];
+//    tooltip.trigger = @"axis";
+//    option.tooltip = tooltip;
+//
+//    PYGrid *grid = [[PYGrid alloc] init];
+//    grid.x = @(40);
+//    grid.x2 = @(50);
+//    option.grid = grid;
+//
+//    PYLegend *legend = [[PYLegend alloc] init];
+//    legend.data = @[@"收益", @"预计收益"];
+//    option.legend = legend;
+//
+//    PYAxis *xAxis = [[PYAxis alloc] init];
+//    xAxis.type = @"category";
+//    xAxis.boundaryGap = @(NO);
+//    xAxis.data = @[@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"];
+//    option.xAxis = [@[xAxis] mutableCopy];
+//
+//    PYAxis *yAxis = [[PYAxis alloc] init];
+//    yAxis.type = @"value";
+//    PYAxisLabel *axisLabel = [[PYAxisLabel alloc] init];
+//    axisLabel.formatter = @"{value}";
+//    yAxis.axisLabel = axisLabel;
+//    option.yAxis = [@[yAxis] mutableCopy];
+//
+//    PYSeries *series = [[PYSeries alloc] init];
+//    series.name = @"收益";
+//    series.type = @"line";
+//    series.data = @[@(11),@(11),@(15),@(13),@(12),@(13),@(10)];
+//    PYSeries *serie2 = [[PYSeries alloc] init];
+//    serie2.name = @"预计收益";
+//    serie2.type = @"line";
+//    serie2.data = @[@(1),@(202),@(2),@(5),@(3),@(2),@(0)];
+//
+//    option.series = [@[series, serie2] mutableCopy];
+//
+//    return option;
+    return [PYOption initPYOptionWithBlock:^(PYOption *option) {
+        option.titleEqual([PYTitle initPYTitleWithBlock:^(PYTitle *title) {
+            title.textEqual(@"姿态分布情况")
+            .subtextEqual(@"姿态占比")
+            .xEqual(PYPositionCenter);
+        }])
+//        .tooltipEqual([PYTooltip initPYTooltipWithBlock:^(PYTooltip *tooltip) {
+//            tooltip.triggerEqual(PYTooltipTriggerItem)
+//            .formatterEqual(@"{a} <br/>{b} : {c} ({d}%)");
+//        }])
+//        .legendEqual([PYLegend initPYLegendWithBlock:^(PYLegend *legend) {
+//            legend.orientEqual(PYOrientVertical)
+//            .xEqual(PYPositionLeft)
+//            .dataEqual(@[@"正姿",@"偏左",@"偏右",@"趴下",@"站立"]);
+//        }])
+        .toolboxEqual([PYToolbox initPYToolboxWithBlock:^(PYToolbox *toolbox) {
+            toolbox.showEqual(NO)
+            .featureEqual([PYToolboxFeature initPYToolboxFeatureWithBlock:^(PYToolboxFeature *feature) {
+                feature.markEqual([PYToolboxFeatureMark initPYToolboxFeatureMarkWithBlock:^(PYToolboxFeatureMark *mark) {
+                    mark.showEqual(YES);
+                }])
+                .dataViewEqual([PYToolboxFeatureDataView initPYToolboxFeatureDataViewWithBlock:^(PYToolboxFeatureDataView *dataView) {
+                    dataView.showEqual(YES).readOnlyEqual(NO);
+                }])
+                .magicTypeEqual([PYToolboxFeatureMagicType initPYToolboxFeatureMagicTypeWithBlock:^(PYToolboxFeatureMagicType *magicType) {
+                    magicType.showEqual(YES).typeEqual(@[PYSeriesTypePie, PYSeriesTypeFunnel]).optionEqual(@{@"funnel":@{@"x":@"25%",@"width":@"50%",@"funnelAlign":PYPositionLeft,@"max":@(1548)}});
+                    
+                }])
+                .restoreEqual([PYToolboxFeatureRestore initPYToolboxFeatureRestoreWithBlock:^(PYToolboxFeatureRestore *restore) {
+                    restore.showEqual(YES);
+                }]);
+            }]);
+        }])
+        .addSeries([PYPieSeries initPYPieSeriesWithBlock:^(PYPieSeries *series) {
+            series.radiusEqual(@"55%")
+            .centerEqual(@[@"50%",@"60%"])
+            .nameEqual(@"姿态")
+            .typeEqual(PYSeriesTypePie)
+            .dataEqual(@[@{@"value":@(settings.goodCountSum),@"name":@"正姿"},@{@"value":@(settings.leftCountSum),@"name":@"左姿"},@{@"value":@(settings.rightCountSum),@"name":@"右姿"},@{@"value":@(settings.badCountSum),@"name":@"趴姿"},@{@"value":@(settings.leaveCountSum),@"name":@"没人"}]);
+           // ,@{@"value":@(settings.standCountSum),@"name":@"站立"}
+        }]);
+    }];
 }
 - (void)back {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];

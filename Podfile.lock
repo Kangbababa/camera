@@ -17,12 +17,14 @@ PODS:
   - EAIntroView (2.11.0):
     - EARestrictedScrollView (~> 1.1.0)
   - EARestrictedScrollView (1.1.0)
+  - iOS-Echarts (1.4.4)
   - SMPageControl (1.2)
   - TensorFlow-experimental (1.1.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - EAIntroView
+  - iOS-Echarts
   - SMPageControl (~> 1.2)
   - TensorFlow-experimental
 
@@ -30,9 +32,10 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   EAIntroView: abcca52bda0d0b8d7d289e2775aa20fa39a228c9
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
+  iOS-Echarts: dbc7423d861e5eedee78906a39d205b5c4da9a13
   SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
   TensorFlow-experimental: c38ed2a43acaa2d42ce4174ac076efaa76e26a12
 
-PODFILE CHECKSUM: 9f6d22c24c011eb588f186d748eb100c000fa42e
+PODFILE CHECKSUM: 8cef4f5151c0691df8cc547143c6ac850dd19f0c
 
 COCOAPODS: 1.3.1
